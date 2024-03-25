@@ -46,8 +46,9 @@ def blocking_effect_generator(verbs, output_file):
         for amb_verb in verbs:
             matrix_verb = random.choice(speech_verb)
             for subj in [female, male]:
+                print(subj)
                 out_sent = subj+matrix_verb+'我'+amb_verb+'自己。'
-            out.write(f'{out_sent}\n')
+                out.write(f'{out_sent}\n')
 
 
 # subject/speaker orientation
