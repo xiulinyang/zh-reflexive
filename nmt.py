@@ -8,7 +8,8 @@ amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
 amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
 verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
-def get_prediction(zh_sents, female_first=True):
+blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
+def get_prediction(zh_sents, female_first=True, block_first=False):
     srcs = zh_sents
     c =0
     batch = tokenizer.prepare_seq2seq_batch(src_texts=srcs, return_tensors="pt")
