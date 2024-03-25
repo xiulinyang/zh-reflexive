@@ -26,5 +26,5 @@ def get_prediction(zh_sents, female_first=True):
 
 
 if __name__ == '__main__':
-    get_prediction(amb_f1, female_first=True)
+    get_prediction(amb_m1, female_first=True)
 
