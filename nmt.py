@@ -25,5 +25,6 @@ def get_prediction(zh_sents, female_first=True):
             print(detokenised_prds[j])
 
 
-
+if __name__ == '__main__':
+    get_prediction(amb_f1, female_first=True)
 
