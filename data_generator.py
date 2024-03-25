@@ -41,8 +41,14 @@ def create_verb_pairs(out_verbs, output_file,female_first=True):
             out.write(f'{out_sent}\n')
 
 # blocking effect
-# def blocking_effect_generator()
-# def create_blocking_effect_pairs():
+def blocking_effect_generator(verbs, output_file):
+    with open(output_file, 'w') as out:
+        for amb_verb in verbs:
+            matrix_verb = random.choice(speech_verb)
+            for subj in [female, male]:
+                out_sent = subj+matrix_verb+'我'+amb_verb+'自己。'
+            out.write(f'{out_sent}\n')
+
 
 # subject/speaker orientation
 
@@ -53,3 +59,5 @@ if __name__=='__main__':
     create_ambiguous_sentences(amb_verbs, output_file='data/amb_m1.txt', female_first=False)
     create_verb_pairs(out_verb, output_file='data/verb_f1.txt')
     create_verb_pairs(out_verb, output_file='data/verb_m1.txt', female_first=False)
+    blocking_effect_generator(amb_verbs, output_file='data/blocking_amb.txt')
+    blocking_effect_generator(out_verb, output_file='data/blocking_verbs.txt')
