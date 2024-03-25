@@ -17,6 +17,8 @@ blocking = Path('data/blocking_amb.txt').read_text()
 def get_probability(zh_sents, female_first=True):
 # Get logits from the model
     c=0
+    f = []
+    m = []
     for sent in zh_sents:
         sent+='在这句话中，自己指的是'
         print(sent)
@@ -41,6 +43,9 @@ def get_probability(zh_sents, female_first=True):
         next_word_probability_him = softmax_probs[0, -1, next_word_id_m].item()
         next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
         print(next_word_probability_her, next_word_probability_him)
+        f.append(next_word_probability_her)
+        m.append(next_word_probability_him)
+
         if female_first:
             if next_word_probability_him>next_word_probability_her:
                 c+=1
@@ -48,7 +53,7 @@ def get_probability(zh_sents, female_first=True):
             if next_word_probability_her>next_word_probability_him:
                 c+=1
     print(c/len(zh_sents))
-
+    print(f, m)
 if __name__ == '__main__':
     print('In ambiguous setting, the percentage of long-distance binding:')
     get_probability(amb_f1, female_first=True)
