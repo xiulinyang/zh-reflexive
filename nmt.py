@@ -7,7 +7,7 @@ model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
 amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
-verb_m1 = Path('data/verb_m1').read_text().strip().split('\n')
+verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
 def get_prediction(zh_sents, female_first=True):
     srcs = zh_sents
     batch = tokenizer.prepare_seq2seq_batch(src_texts=srcs, return_tensors="pt")
