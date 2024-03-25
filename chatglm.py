@@ -1,38 +1,58 @@
-
-from typing import List,Tuple
 import torch
-from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModel
+import torch.nn.functional as F
+from pathlib import Path
+# Initialize tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
 model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
-model = model.eval()
+model.eval()
+
+amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
+amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
+verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
+verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
+blocking = Path('data/blocking_amb.txt').read_text()
 
 
+def get_probability(zh_sents, female_first=True):
+# Get logits from the model
+    c=0
+    for sent in zh_sents:
+        sent+='在这句话中，自己指的是'
+        print(sent)
+        encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
+        token_ids = encoded_input['input_ids']
 
-#logits_processor = LogitsProcessorList()
-#logits_processor.append(InvalidScoreLogitsProcessor())
-with torch.no_grad():
-    for idx, item in enumerate(['你好','怎么学习？']):
-        ids = tokenizer.encode(item)
-        input_ids = torch.LongTensor([ids]).cuda()
-        out = model.generate(
-            input_ids=input_ids,
-            max_length=150,
-            do_sample=False,
-            temperature=0,
-            return_dict_in_generate=True,
-            output_scores = True
-        )
-        
-        gen_ids = out.sequences.tolist()[0][len(input_ids):]
-        response = tokenizer.decode(gen_ids)
-        # scores是Tuple，只包括新生成的token的logits 形状为new_token_num * vocab_size
-        scores = out.scores
-        out_text = tokenizer.decode(gen_ids)
-        answer = out_text.replace(item, "").replace("\nEND", "").strip()
-        output = answer
-        score = scores
-        
-        print(f"### {idx+1}.Answer:\n", output, score, '\n\n')
-response, history = model.chat(tokenizer, "你好", history=[])
-print(response)
+        with torch.no_grad():
+            outputs = model(**encoded_input)
+            logits = outputs.logits  # Assuming the model outputs include logits
 
+
+        next_word_m = "他"
+        next_word_id_m = tokenizer.encode(next_word_m, add_special_tokens=False)[0]
+
+        next_word_f ='她'
+        next_word_id_f = tokenizer.encode(next_word_f, add_special_tokens=False)[0]
+
+        # Apply softmax to convert logits to probabilities
+        softmax_probs = F.softmax(logits, dim=-1)
+
+        # Extract the probability of "Monday" for the next word prediction
+        next_word_probability_him = softmax_probs[0, -1, next_word_id_m].item()
+        next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
+        print(next_word_probability_her, next_word_probability_him)
+        if female_first:
+            if next_word_probability_him>next_word_probability_her:
+                c+=1
+        else:
+            if next_word_probability_her>next_word_probability_him:
+                c+=1
+    print(c/len(zh_sents))
+
+if __name__ == '__main__':
+    print('In ambiguous setting, the percentage of long-distance binding:')
+    get_probability(amb_f1, female_first=True)
+    get_probability(amb_m1, female_first=False)
+    print('In externally oriented verb setting, the percentage of long-distance binding:')
+    get_probability(verb_f1, female_first=True)
+    get_probability(verb_m1, female_first=False)
