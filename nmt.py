@@ -1,5 +1,5 @@
 from transformers import MarianTokenizer, MarianMTModel
-from pahtlib import Path
+from pathlib import Path
 
 tokenizer = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
 model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
