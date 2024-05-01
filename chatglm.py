@@ -24,6 +24,7 @@ def get_probability(zh_sents, blocking = False, female_first=False, animacy=Fals
     w = []
     t = []
     for sent in zh_sents:
+        sent = f'“{sent}”，'
         sent+='在这句话中，自己指的是'
         print(sent)
         encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
@@ -61,18 +62,24 @@ def get_probability(zh_sents, blocking = False, female_first=False, animacy=Fals
         all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
                     'w': next_word_probability_w, 't': next_word_probability_t}
         all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
-        if blocking and all_prob[0][0] =='w':
-            c += 1
-        elif animacy and all_prob[0][0] =='t':
-            c+=1
+        print(all_prob)
+        if blocking:
+            if all_prob[0][0] =='w':
+                c += 1
+        elif animacy:
+            if all_prob[0][0] =='t':
+                c+=1
         else:
-            if female_first and all_prob[0][0]=='m':
+            if female_first:
+               if all_prob[0][0]=='m':
+                    
                     c+=1
-            else:
+            elif not female_first:
                 if all_prob[0][0]=='f':
                     c+=1
     print(c/len(zh_sents))
-    print(f, m)
+    print(c)
+    print(len(zh_sents))
 if __name__ == '__main__':
     print('In ambiguous setting, the percentage of local binding:')
     get_probability(amb_f1, female_first=True)

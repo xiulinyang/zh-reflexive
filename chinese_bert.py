@@ -25,7 +25,7 @@ def get_probability(zh_sents, female_first=True, blocking = False, animacy =Fals
     w = []
     t = []
     for s in zh_sents:
-        text= '在'+s+'中，自己指的是[MASK]。'
+        text= '在“'+s+'”中，自己指的是[MASK]。'
         print(text)
         tokenized_text = tokenizer.tokenize(text)
         indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
