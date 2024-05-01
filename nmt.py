@@ -9,8 +9,8 @@ amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
 verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
 blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
-animacy_pro = Path('data/animacy_pron.txt').read_text().strip().split('\n')
-animacy_noun = Path('data/animacy_noun.txt').read_text().strip().split('\n')
+animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
+animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
 
 def get_prediction(zh_sents, female_first=False, block_first=False, animacy=False):
     srcs = zh_sents
