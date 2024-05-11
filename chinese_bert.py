@@ -62,18 +62,21 @@ def get_probability(zh_sents, female_first=True, blocking = False, animacy =Fals
         all_prob = {'f': word_probability_f, 'm': word_probability_m,
                     'w': word_probability_w, 't': word_probability_t}
         all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
-        if blocking and all_prob[0][0] == 'w':
-            c += 1
-        elif animacy and all_prob[0][0] == 't':
-            c += 1
-        else:
-            if female_first and all_prob[0][0] == 'm':
+        print(all_prob)
+        if blocking:
+            if all_prob[0][0] == 'w':
                 c += 1
+        elif animacy:
+            if all_prob[0][0] == 't':
+                c += 1
+        else:
+            if female_first:
+                if all_prob[0][0] == 'm':
+                    c += 1
             else:
                 if all_prob[0][0] == 'f':
                     c += 1
     print(c/len(zh_sents))
-    print(f, m, w)
 
 
 if __name__ == '__main__':
