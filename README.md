@@ -7,5 +7,5 @@ Project scripts for the course *Computational Discourse Modeling*.
 
 ## Probe language models
 - ```chatglm.py```: the script used to probe chatglm.
-- ```chinese_bert.py```: the script used to probe chinese-bert-base.
+- ```chinese_bert.py```: the script used to probe chinese-bert-base/multilingual bert/XLM-R.
 - ```nmt.py```: the script to probe the Helsinki-NLP zh2en MT system.
