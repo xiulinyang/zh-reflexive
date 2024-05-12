@@ -7,15 +7,15 @@ tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=
 model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
 model.eval()
 
-amb_f1 = Path('../data/amb_f1.txt').read_text().strip().split('\n')
-amb_m1 = Path('../data/amb_m1.txt').read_text().strip().split('\n')
-verb_f1 = Path('../data/verb_f1.txt').read_text().strip().split('\n')
-verb_m1 = Path('../data/verb_m1.txt').read_text().strip().split('\n')
-blocking = Path('../data/blocking_amb.txt').read_text().strip().split('\n')
-animacy_pro = Path('../data/inanimate_pron.txt').read_text().strip().split('\n')
-animacy_noun = Path('../data/inanimate_nouns.txt').read_text().strip().split('\n')
-subj_f1 = Path('../data/subject_orientation_f1.txt').read_text().strip().split('\n')
-subj_m1 = Path('../data/subject_orientation_m1.txt').read_text().strip().split('\n')
+amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
+amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
+verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
+verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
+blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
+animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
+animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
+subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n')
+subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n')
 
 def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False):
 # Get logits from the model
