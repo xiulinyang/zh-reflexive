@@ -29,7 +29,6 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
         for sent in zh_sents:
             sent = f'“{sent}”，'
             sent+='在这句话中，自己指的是'
-            print(sent)
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
             token_ids = encoded_input['input_ids']
 
@@ -69,7 +68,6 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
                         'w': next_word_probability_w, 't': next_word_probability_t}
             out_tsv.write(f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
-            print(all_prob)
             if blocking:
                 if all_prob[0][0] =='w':
                     c += 1
