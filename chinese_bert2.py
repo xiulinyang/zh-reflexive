@@ -1,7 +1,13 @@
 from transformers import BertTokenizer, BertForMaskedLM
 import torch
 import torch.nn.functional as F
+import json
 from pathlib import Path
+from transformers import pipeline
+from tqdm import tqdm
+from transformers import logging
+
+logging.set_verbosity_error()
 from scipy.special import softmax
 # Load pre-trained model tokenizer (vocabulary) and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
@@ -21,63 +27,26 @@ subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n'
 # Tokenize input
 def get_probability(zh_sents, output, female_first=True, blocking = False, animacy =False):
 # Get logits from the model
-    c = 0
-    f = []
-    m = []
-    w = []
-    t = []
-
-
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
-        for s in zh_sents:
-            text= '在“'+s+'”中，自己指的是[MASK]。'
-            # print(text)
-            tokenized_text = tokenizer.tokenize(text)
-            indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
-            mask_index = tokenized_text.index("[MASK]")
-            # Convert to tensors
-            tokens_tensor = torch.tensor([indexed_tokens])
+        c = 0
+        target_dic = {'她':'f','他':'m','我':'w','它':'t'}
+        target = ['他','她', '我','它']
+        for s in tqdm(zh_sents):
+            text= f'在“'+s+f'”中，自己指的是[MASK]。'
+            nlp = pipeline("fill-mask", model="bert-base-chinese")
+            predictions = nlp(text, targets=target)
+            print(predictions)
+            all_prob = {target_dic[x['token_str']]: x['score'] for x in predictions}
+            m = all_prob['m']
+            f = all_prob['f']
+            w = all_prob['w']
+            t = all_prob['t']
+            out_tsv.write(f'{m}\t{f}\t{w}\t{t}\n')
 
-            # Predict all tokens
-            with torch.no_grad():
-                outputs = model(tokens_tensor)
-                predictions = outputs.logits
-
-            # Apply softmax to get probabilities for the masked token
-            softmax_probs = F.softmax(predictions[0, mask_index], dim=-1)
-            next_word_m = '他'
-            next_word_f = '她'
-            next_word_w = '我'
-            next_word_t = '它'
-
-            next_word_id_m = tokenizer.convert_tokens_to_ids(next_word_m)
-            next_word_id_f = tokenizer.convert_tokens_to_ids(next_word_f)
-            next_word_id_w = tokenizer.convert_tokens_to_ids(next_word_w)
-            next_word_id_t = tokenizer.convert_tokens_to_ids(next_word_t)
-
-            word_probability_m = softmax_probs[next_word_id_m].item()
-            word_probability_f = softmax_probs[next_word_id_f].item()
-            word_probability_w = softmax_probs[next_word_id_w].item()
-            word_probability_t = softmax_probs[next_word_id_t].item()
-
-            # softmax_prob = softmax_probs[word_probability_m, word_probability_f, word_probability_w]
-            f.append(word_probability_m)
-            m.append(word_probability_f)
-            w.append(word_probability_w)
-            t.append(word_probability_t)
-
-            all_prob = {'f': word_probability_f, 'm': word_probability_m,
-                        'w': word_probability_w, 't': word_probability_t}
-
-            # print(all_prob)
-            mm = all_prob['m']
-            ff = all_prob['f']
-            ww = all_prob['w']
-            tt = all_prob['t']
-            out_tsv.write(f'{mm}\t{ff}\t{ww}\t{tt}\n')
 
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
+            # print(all_prob)
             if blocking:
                 if all_prob[0][0] == 'w':
                     c += 1
@@ -101,7 +70,7 @@ if __name__ == '__main__':
     get_probability(amb_m1, 'amb_m1.tsv', female_first=False)
     print('In externally oriented verb setting, the percentage of local binding:')
     get_probability(verb_f1, 'verb_f1.tsv', female_first=True)
-    get_probability(verb_m1, 'verb_m1.tsv', female_first=False)
+    get_probability(verb_m1, 'verb_m1.tsv',female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
     get_probability(blocking, 'blocking.tsv', blocking=True)
     print('In animate (pro) setting, the percentage of local binding:')
@@ -111,3 +80,4 @@ if __name__ == '__main__':
     print('In subject orientation, the percentage of local binding:')
     get_probability(subj_f1, 'subj_f1.tsv', female_first=True)
     get_probability(subj_m1, 'subj_m1.tsv', female_first=False)
+
