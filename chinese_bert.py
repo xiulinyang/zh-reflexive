@@ -2,10 +2,16 @@ from transformers import BertTokenizer, BertForMaskedLM
 import torch
 import torch.nn.functional as F
 from pathlib import Path
+from tqdm import tqdm
 from scipy.special import softmax
 # Load pre-trained model tokenizer (vocabulary) and model
-tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
-model = BertForMaskedLM.from_pretrained('bert-base-chinese')
+# tokenizer = BertTokenizer.from_pretrained('google-bert/bert-base-multilingual-cased')
+# model = BertForMaskedLM.from_pretrained('google-bert/bert-base-multilingual-cased')
+from transformers import AutoTokenizer, AutoModelForMaskedLM
+
+tokenizer = AutoTokenizer.from_pretrained('xlm-roberta-base')
+model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
+
 model.eval()  # Put the model in evaluation mode
 
 
@@ -30,12 +36,12 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
 
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
-        for s in zh_sents:
-            text= '在“'+s+'”中，自己指的是[MASK]。'
+        for s in tqdm(zh_sents):
+            text= '在“'+s+'”中，自己指的是<mask>。'
             # print(text)
             tokenized_text = tokenizer.tokenize(text)
             indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
-            mask_index = tokenized_text.index("[MASK]")
+            mask_index = tokenized_text.index("<mask>")
             # Convert to tensors
             tokens_tensor = torch.tensor([indexed_tokens])
 
@@ -93,21 +99,26 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
                         c += 1
         print(c, len(zh_sents))
         print(c/len(zh_sents))
+    return c, len(zh_sents)
 
 
 if __name__ == '__main__':
     print('In ambiguous setting, the percentage of local binding:')
-    get_probability(amb_f1, 'amb_f1.tsv', female_first=True)
-    get_probability(amb_m1, 'amb_m1.tsv', female_first=False)
+    c1, len_sent1 = get_probability(amb_f1, 'amb_f1_xlm.tsv', female_first=True)
+    c2, len_sent2 = get_probability(amb_m1, 'amb_m1_xlm.tsv', female_first=False)
     print('In externally oriented verb setting, the percentage of local binding:')
-    get_probability(verb_f1, 'verb_f1.tsv', female_first=True)
-    get_probability(verb_m1, 'verb_m1.tsv', female_first=False)
+    c3, len_sent3 = get_probability(verb_f1, 'verb_f1_xlm.tsv', female_first=True)
+    c4, len_sent4 = get_probability(verb_m1, 'verb_m1_xlm.tsv', female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
-    get_probability(blocking, 'blocking.tsv', blocking=True)
+    c5, len_sent5 = get_probability(blocking, 'blocking_xlm.tsv', blocking=True)
     print('In animate (pro) setting, the percentage of local binding:')
-    get_probability(animacy_pro, 'animacy_pro.tsv', animacy=True)
+    c6, len_sent6 = get_probability(animacy_pro, 'animacy_pro_xlm.tsv', animacy=True)
     print('In animate (noun) setting, the percentage of local binding:')
-    get_probability(animacy_noun, 'animacy_noun.tsv', animacy=True)
+    c7, len_sent7 = get_probability(animacy_noun, 'animacy_noun_xlm.tsv', animacy=True)
     print('In subject orientation, the percentage of local binding:')
-    get_probability(subj_f1, 'subj_f1.tsv', female_first=True)
-    get_probability(subj_m1, 'subj_m1.tsv', female_first=False)
+    c8, len_sent8 = get_probability(subj_f1, 'subj_f1_xlm.tsv', female_first=True)
+    c9, len_sent9 = get_probability(subj_m1, 'subj_m1_xlm.tsv', female_first=False)
+    c = c1 + c2 + len_sent3 - c3 + len_sent4 - c4 + c5 + len_sent6 - c6 + len_sent7- c7 + len_sent8 - c8 + len_sent9 - c9
+    len_sent = len_sent1 + len_sent2 + len_sent3 + len_sent4 + len_sent5 + len_sent6 + len_sent7 + len_sent8 + len_sent9
+
+    print(c, len_sent, c/len_sent)
