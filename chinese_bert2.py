@@ -24,19 +24,30 @@ animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
 animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
 subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n')
 subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n')
+
+
+local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
+local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
+
 # Tokenize input
-def get_probability(zh_sents, output, female_first=True, blocking = False, animacy =False):
+def get_probability(zh_sents, output, local_binding=False, female_first=True, blocking = False, animacy =False):
 # Get logits from the model
+    mask = tokenizer.mask_token
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
         c = 0
         target_dic = {'她':'f','他':'m','我':'w','它':'t'}
         target = ['他','她', '我','它']
         for s in tqdm(zh_sents):
-            text= f'在“'+s+f'”中，自己指的是[MASK]。'
+            if local_binding:
+                text= f'{s[:-3]}{mask}自己。'
+               
+            else:
+                text = f'既然{s[:-1]},那么{s[-6:-3]}{mask}自己。'
+            # text = f'如果{s[:-1]},那么{mask}{s[-5:]}'
             nlp = pipeline("fill-mask", model="bert-base-chinese")
             predictions = nlp(text, targets=target)
-            print(predictions)
+            # print(predictions)
             all_prob = {target_dic[x['token_str']]: x['score'] for x in predictions}
             m = all_prob['m']
             f = all_prob['f']
@@ -46,6 +57,7 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
 
 
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
+
             # print(all_prob)
             if blocking:
                 if all_prob[0][0] == 'w':
@@ -65,19 +77,21 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
 
 
 if __name__ == '__main__':
-    print('In ambiguous setting, the percentage of local binding:')
-    get_probability(amb_f1, 'amb_f1.tsv', female_first=True)
-    get_probability(amb_m1, 'amb_m1.tsv', female_first=False)
-    print('In externally oriented verb setting, the percentage of local binding:')
-    get_probability(verb_f1, 'verb_f1.tsv', female_first=True)
-    get_probability(verb_m1, 'verb_m1.tsv',female_first=False)
-    print('In the blocking effect setting, the percentage of local binding:')
-    get_probability(blocking, 'blocking.tsv', blocking=True)
-    print('In animate (pro) setting, the percentage of local binding:')
-    get_probability(animacy_pro, 'animacy_pro.tsv', animacy=True)
-    print('In animate (noun) setting, the percentage of local binding:')
-    get_probability(animacy_noun, 'animacy_noun.tsv', animacy=True)
-    print('In subject orientation, the percentage of local binding:')
-    get_probability(subj_f1, 'subj_f1.tsv', female_first=True)
-    get_probability(subj_m1, 'subj_m1.tsv', female_first=False)
+    get_probability(local_f1, 'local_f1.tsv', local_binding=True, female_first=False)
+    get_probability(local_m1, 'local_m1.tsv', local_binding=True, female_first=True)
+    # print('In ambiguous setting, the percentage of local binding:')
+    # get_probability(amb_f1, 'amb_f1.tsv', female_first=True)
+    # get_probability(amb_m1, 'amb_m1.tsv', female_first=False)
+    # print('In externally oriented verb setting, the percentage of local binding:')
+    # get_probability(verb_f1, 'verb_f1.tsv', female_first=True)
+    # get_probability(verb_m1, 'verb_m1.tsv',female_first=False)
+    # print('In the blocking effect setting, the percentage of local binding:')
+    # get_probability(blocking, 'blocking.tsv', blocking=True)
+    # print('In animate (pro) setting, the percentage of local binding:')
+    # get_probability(animacy_pro, 'animacy_pro.tsv', animacy=True)
+    # print('In animate (noun) setting, the percentage of local binding:')
+    # get_probability(animacy_noun, 'animacy_noun.tsv', animacy=True)
+    # print('In subject orientation, the percentage of local binding:')
+    # get_probability(subj_f1, 'subj_f1.tsv', female_first=True)
+    # get_probability(subj_m1, 'subj_m1.tsv', female_first=False)
 

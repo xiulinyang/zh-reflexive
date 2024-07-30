@@ -84,6 +84,7 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
             out_tsv.write(f'{mm}\t{ff}\t{ww}\t{tt}\n')
 
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
+            print(all_prob)
             if blocking:
                 if all_prob[0][0] == 'w':
                     c += 1

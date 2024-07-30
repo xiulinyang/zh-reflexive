@@ -27,8 +27,8 @@ def get_prediction(zh_sents, female_first=False, block_first=False, animacy=Fals
             outputs_beam["sequences"], skip_special_tokens=True)
 
     for j, src in enumerate(srcs):
-        # print(src)
-        # print(detokenised_prds[j])
+        print(src)
+        print(detokenised_prds[j])
         if block_first:
             if 'myself' in detokenised_prds[j]:
                 c += 1
@@ -53,14 +53,14 @@ if __name__ == '__main__':
     # get_prediction(amb_f1, female_first=True)
     # get_prediction(amb_m1, female_first=False)
     # print('In externally oriented verb setting, the percentage of local binding:')
-    # get_prediction(verb_f1, female_first=True)
-    # get_prediction(verb_m1, female_first=False)
+    get_prediction(verb_f1, female_first=True)
+    get_prediction(verb_m1, female_first=False)
     # print('In externally blocking effect setting, the percentage of local binding:')
     # get_prediction(blocking, block_first=True)
     # print('In animate (pro) setting, the percentage of local binding:')
     # get_prediction(animacy_pro, animacy=True)
     # print('In animate (noun) setting, the percentage of local binding:')
     # get_prediction(animacy_noun, animacy=True)
-    print('In subject orientation, the percentage of local binding:')
-    get_prediction(subj_f1,  female_first=True)
-    get_prediction(subj_m1,  female_first=False)
+    # print('In subject orientation, the percentage of local binding:')
+    # get_prediction(subj_f1,  female_first=True)
+    # get_prediction(subj_m1,  female_first=False)

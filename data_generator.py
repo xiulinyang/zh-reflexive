@@ -90,6 +90,16 @@ def subject_orientation(inanimate_noun_no_def, ditransitive_verb, output_file, f
                     # out.write(f'{sent}\n')
 
 
+def local_binding(amb_verbs, output_file, female=True):
+    with open(output_file, 'w') as out:
+        for v in amb_verbs:
+            if female:
+                sent = '她'+v+'自己。'
+            else:
+                sent = '他' + v + '自己。'
+            out.write(f'{sent}\n')
+
+
 if __name__=='__main__':
     # create_ambiguous_sentences(amb_verbs, output_file='data/amb_f1.txt')
     # create_ambiguous_sentences(amb_verbs, output_file='data/amb_m1.txt', female_first=False)
@@ -99,5 +109,7 @@ if __name__=='__main__':
     # blocking_effect_generator(out_verb, output_file='data/blocking_verbs.txt')
     # animacy_effect(inanimate_nouns, inanimate_verbs, output_file='data/inanimate_nouns.txt')
     # animacy_effect(inanimate_pronoun, inanimate_verbs, output_file='data/inanimate_pron.txt')
-    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
-    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
+    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
+    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
+    local_binding(amb_verbs, output_file='data/local_female.txt', female=True)
+    local_binding(amb_verbs, output_file='data/local_male.txt', female=False)
