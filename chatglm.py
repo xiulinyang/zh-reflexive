@@ -18,7 +18,8 @@ animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
 animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
 subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n')
 subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n')
-
+subj_f1_bias = Path('data/subject_orientation_f1_bias.txt').read_text().strip().split('\n')
+subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().split('\n')
 def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False):
 # Get logits from the model
     c=0
@@ -90,21 +91,26 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     return c, len(zh_sents)
 if __name__ == '__main__':
     print('In ambiguous setting, the percentage of local binding:')
-    c1, len_sent1 = get_probability(amb_f1, 'amb_f1_glm.tsv', female_first=True)
-    c2, len_sent2 = get_probability(amb_m1, 'amb_m1_glm.tsv', female_first=False)
+    c1, len_sent1 = get_probability(amb_f1, 'result/glm/amb_f1_glm.tsv', female_first=True)
+    c2, len_sent2 = get_probability(amb_m1, 'result/glm/amb_m1_glm.tsv', female_first=False)
     print('In externally oriented verb setting, the percentage of local binding:')
-    c3, len_sent3 = get_probability(verb_f1, 'verb_f1_glm.tsv', female_first=True)
-    c4, len_sent4 = get_probability(verb_m1, 'verb_m1_glm.tsv', female_first=False)
+    c3, len_sent3 = get_probability(verb_f1, 'result/glm/verb_f1_glm.tsv', female_first=True)
+    c4, len_sent4 = get_probability(verb_m1, 'result/glm/verb_m1_glm.tsv', female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
-    c5, len_sent5 = get_probability(blocking, 'blocking_glm.tsv', blocking=True)
+    c5, len_sent5 = get_probability(blocking, 'result/glm/blocking_glm.tsv', blocking=True)
     print('In animate (pro) setting, the percentage of local binding:')
-    c6, len_sent6 = get_probability(animacy_pro, 'animacy_pro_glm.tsv', animacy=True)
+    c6, len_sent6 = get_probability(animacy_pro, 'result/glm/animacy_pro_glm.tsv', animacy=True)
     print('In animate (noun) setting, the percentage of local binding:')
-    c7, len_sent7 = get_probability(animacy_noun, 'animacy_noun_glm.tsv', animacy=True)
+    c7, len_sent7 = get_probability(animacy_noun, 'result/glm/animacy_noun_glm.tsv', animacy=True)
     print('In subject orientation, the percentage of local binding:')
-    c8, len_sent8 = get_probability(subj_f1, 'subj_f1_glm.tsv', female_first=True)
-    c9, len_sent9 = get_probability(subj_m1, 'subj_m1_glm.tsv', female_first=False)
-    c10, len_sent10 = get_probability()
+    c8, len_sent8 = get_probability(subj_f1, 'result/glm/subj_f1_glm.tsv', female_first=True)
+    c9, len_sent9 = get_probability(subj_m1, 'result/glm/subj_m1_glm.tsv', female_first=False)
+    print('In subject orientation in a gender-biased setting, the percentage of local binding:')
+    c10, len_sent10 = get_probability(subj_f1_bias, 'result/glm/subj_f1_bias_glm.tsv', female_first=True)
+    c11, len_sent11 = get_probability(subj_m1_bias, 'result/glm/subj_m1_bias_glm.tsv', female_first=False)
+    print('Local binding percentage:')
+    c12, len_sent12 = get_probability(local_f1, 'result/glm/local_f1.tsv', female_first=False)
+    c13, len_sent13 = get_probability(local_m1, 'result/glm/local_m1.tsv', female_first=False)
     c = c1 + c2 + len_sent3 - c3 + len_sent4 - c4 + c5 + len_sent6 - c6 + len_sent7 - c7 + len_sent8 - c8 + len_sent9 - c9
     len_sent = len_sent1 + len_sent2 + len_sent3 + len_sent4 + len_sent5 + len_sent6 + len_sent7 + len_sent8 + len_sent9
 
