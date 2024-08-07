@@ -7,6 +7,8 @@ tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=
 model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
 model.eval()
 
+local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
+local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
 amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
@@ -27,8 +29,8 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
         for sent in zh_sents:
-            sent = f'“{sent}”，'
-            sent+='在这句话中，自己指的是'
+
+            sent=f'在“{sent}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
             token_ids = encoded_input['input_ids']
 
@@ -46,7 +48,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
             next_word_id_w = tokenizer.encode(next_word_w, add_special_tokens=False)[0]
             next_word_id_t = tokenizer.encode(next_word_t, add_special_tokens=False)[0]
 
-            # Apply softmax to convert logits to probabilities
+
             softmax_probs = F.softmax(logits, dim=-1)
 
             # Extract the probability of "Monday" for the next word prediction
@@ -102,6 +104,7 @@ if __name__ == '__main__':
     print('In subject orientation, the percentage of local binding:')
     c8, len_sent8 = get_probability(subj_f1, 'subj_f1_glm.tsv', female_first=True)
     c9, len_sent9 = get_probability(subj_m1, 'subj_m1_glm.tsv', female_first=False)
+    c10, len_sent10 = get_probability()
     c = c1 + c2 + len_sent3 - c3 + len_sent4 - c4 + c5 + len_sent6 - c6 + len_sent7 - c7 + len_sent8 - c8 + len_sent9 - c9
     len_sent = len_sent1 + len_sent2 + len_sent3 + len_sent4 + len_sent5 + len_sent6 + len_sent7 + len_sent8 + len_sent9
 

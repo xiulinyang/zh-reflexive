@@ -1,0 +1,96 @@
+她说这本书伤害了自己。	She said the book hurt herself.
+他说这本书改变了自己。	He said the book changed itself.
+他说这本书影响了自己。	He said the book affected himself.
+他说这本书吸引了自己。	He said the book attracted itself.
+她说这本书启发了自己。	She said the book inspired herself.
+他说这本书激励了自己。	He said the book inspired himself.
+她说这本书刺激了自己。	She said the book was stimulating itself.
+他说这本书困扰了自己。	He said the book bothers himself.
+他说这本书鼓舞了自己。	He said the book inspired himself.
+他说这本书鞭策了自己。	He said the book inspired himself.
+他说这本书感动了自己。	He said the book touched itself.
+他说这本书迷惑了自己。	He said the book was confusing itself.
+她说这本书提醒了自己。	She said the book reminded herself.
+他说这封信伤害了自己。	He said that this letter hurt himself.
+她说这封信改变了自己。	She said that this letter changed herself.
+她说这封信影响了自己。	She said that this letter affected herself.
+她说这封信吸引了自己。	She said the letter attracted herself.
+她说这封信启发了自己。	She said the letter inspired herself.
+他说这封信激励了自己。	He said the letter inspired himself.
+他说这封信刺激了自己。	He said that this letter inspired himself.
+她说这封信困扰了自己。	She says this letter bothers herself.
+她说这封信鼓舞了自己。	She said that the letter inspired herself.
+他说这封信鞭策了自己。	He said that this letter inspired himself.
+她说这封信感动了自己。	She said the letter touched herself.
+她说这封信刺激了自己。	She said that this letter inspired herself.
+她说这封信迷惑了自己。	She said that the letter was confusing to herself.
+她说这封信提醒了自己。	She said that the letter reminded herself.
+她说这封信激励了自己。	She said the letter inspired herself.
+他说这个举动伤害了自己。	He said this move hurt himself.
+她说这个举动改变了自己。	She said it changed herself.
+她说这个举动影响了自己。	She said it affected herself.
+他说这个举动吸引了自己。	He said this move attracted himself.
+她说这个举动启发了自己。	She said it inspired herself.
+他说这个举动激励了自己。	He said it inspired himself.
+他说这个举动刺激了自己。	He said this move inspired himself.
+她说这个举动困扰了自己。	She said it bothers herself.
+她说这个举动鼓舞了自己。	She said it inspired herself.
+他说这个举动鞭策了自己。	He said this move inspired himself.
+她说这个举动感动了自己。	She said it moved herself.
+他说这个举动迷惑了自己。	He said that this move was confusing to himself.
+他说这个举动提醒了自己。	He said it reminded himself.
+她说这个举动激励了自己。	She said it inspired herself.
+他说这个结果伤害了自己。	He said that the result hurt himself.
+他说这个结果改变了自己。	He said it changed himself.
+他说这个结果影响了自己。	He said it affected himself.
+他说这个结果吸引了自己。	He said that the result attracted himself.
+他说这个结果启发了自己。	He said it inspired himself.
+他说这个结果激励了自己。	He said it inspired himself.
+她说这个结果刺激了自己。	She said that this turned out to be an inspiration to herself.
+她说这个结果困扰了自己。	She says it bothers herself.
+她说这个结果鼓舞了自己。	She said it inspired herself.
+她说这个结果鞭策了自己。	She said that the result inspired herself.
+她说这个结果感动了自己。	She said it touched herself.
+他说这个结果刺激了自己。	He said it worked out to stimulate himself.
+他说这个结果迷惑了自己。	He said that the result was confusing to himself.
+她说这个结果提醒了自己。	She said that the result was a reminder to herself.
+她说这个结果激励了自己。	She said it inspired herself.
+他说这个问题伤害了自己。	He said the problem hurt himself.
+她说这个问题改变了自己。	She said that the problem had changed for herself.
+她说这个问题影响了自己。	She said that the problem affected herself.
+她说这个问题吸引了自己。	She said the question attracted herself.
+他说这个问题启发了自己。	He said that the question had inspired himself.
+他说这个问题激励了自己。	He said the question inspired himself.
+他说这个问题刺激了自己。	He said the question was stimulating itself.
+他说这个问题困扰了自己。	He said the problem bothers himself.
+他说这个问题鼓舞了自己。	He said that the issue inspired himself.
+他说这个问题鞭策了自己。	He said that the question inspired himself.
+他说这个问题感动了自己。	He said the question touched himself.
+她说这个问题迷惑了自己。	She said the question was confusing to herself.
+她说这个问题提醒了自己。	She said that that was a reminder to herself.
+她说这句话伤害了自己。	She said it hurt herself.
+她说这句话改变了自己。	She said it changed herself.
+他说这句话影响了自己。	He said it affected himself.
+他说这句话吸引了自己。	He said it attracted himself.
+她说这句话启发了自己。	She said it inspired herself.
+她说这句话激励了自己。	She said it inspired herself.
+他说这句话刺激了自己。	He said that to stimulate himself.
+他说这句话困扰了自己。	He said it bothers himself.
+他说这句话鼓舞了自己。	He said that was an inspiration to himself.
+他说这句话鞭策了自己。	He said that words inspired himself.
+他说这句话感动了自己。	He said it touched himself.
+他说这句话迷惑了自己。	He said that was confusing to himself.
+她说这句话提醒了自己。	She said that reminds herself.
+他说这个事件伤害了自己。	He said the incident hurt himself.
+他说这个事件改变了自己。	He said the incident changed itself.
+他说这个事件影响了自己。	He said it affected himself.
+她说这个事件吸引了自己。	She said it attracted herself.
+她说这个事件启发了自己。	She said it inspired herself.
+她说这个事件激励了自己。	She said it inspired herself.
+她说这个事件刺激了自己。	She said that the incident had inspired herself.
+她说这个事件困扰了自己。	She said it bothers herself.
+她说这个事件鼓舞了自己。	She said it inspired herself.
+他说这个事件鞭策了自己。	He said the incident inspired himself.
+她说这个事件感动了自己。	She said it touched herself.
+他说这个事件迷惑了自己。	He said the incident was confusing to himself.
+她说这个事件提醒了自己。	She said the incident reminded herself.
