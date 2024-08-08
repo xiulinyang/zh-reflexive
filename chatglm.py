@@ -13,6 +13,8 @@ amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
 amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
 verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
+in_verb_f1 = Path('data/in_verb_f1.txt').read_text().strip().split('\n')
+in_verb_m1 = Path('data/in_verb_m1.txt').read_text().strip().split('\n')
 blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
 animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
 animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
@@ -20,6 +22,7 @@ subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n'
 subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n')
 subj_f1_bias = Path('data/subject_orientation_f1_bias.txt').read_text().strip().split('\n')
 subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().split('\n')
+
 def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False):
 # Get logits from the model
     c=0
@@ -96,6 +99,9 @@ if __name__ == '__main__':
     print('In externally oriented verb setting, the percentage of local binding:')
     c3, len_sent3 = get_probability(verb_f1, 'result/glm/verb_f1_glm.tsv', female_first=True)
     c4, len_sent4 = get_probability(verb_m1, 'result/glm/verb_m1_glm.tsv', female_first=False)
+    print('In externally oriented verb setting, the percentage of local binding:')
+    c14, len_sent14 = get_probability(in_verb_f1, 'result/glm/in_verb_f1_glm.tsv', female_first=True)
+    c15, len_sent15 = get_probability(in_verb_m1, 'result/glm/in_verb_m1_glm.tsv', female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
     c5, len_sent5 = get_probability(blocking, 'result/glm/blocking_glm.tsv', blocking=True)
     print('In animate (pro) setting, the percentage of local binding:')
