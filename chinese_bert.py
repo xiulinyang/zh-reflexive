@@ -14,16 +14,22 @@ model = AutoModelForMaskedLM.from_pretrained("xlm-roberta-base")
 
 model.eval()  # Put the model in evaluation mode
 
-
+local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
+local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
 amb_m1 = Path('data/amb_m1.txt').read_text().strip().split('\n')
 verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
 verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
+in_verb_f1 = Path('data/in_verb_f1.txt').read_text().strip().split('\n')
+in_verb_m1 = Path('data/in_verb_m1.txt').read_text().strip().split('\n')
 blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
 animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
 animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
 subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n')
 subj_m1 = Path('data/subject_orientation_m1.txt').read_text().strip().split('\n')
+subj_f1_bias = Path('data/subject_orientation_f1_bias.txt').read_text().strip().split('\n')
+subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().split('\n')
+
 # Tokenize input
 def get_probability(zh_sents, output, female_first=True, blocking = False, animacy =False):
 # Get logits from the model
@@ -105,21 +111,29 @@ def get_probability(zh_sents, output, female_first=True, blocking = False, anima
 
 if __name__ == '__main__':
     print('In ambiguous setting, the percentage of local binding:')
-    c1, len_sent1 = get_probability(amb_f1, 'amb_f1_xlm.tsv', female_first=True)
-    c2, len_sent2 = get_probability(amb_m1, 'amb_m1_xlm.tsv', female_first=False)
+    c1, len_sent1 = get_probability(amb_f1, 'result/bert/amb_f1_bert.tsv', female_first=True)
+    c2, len_sent2 = get_probability(amb_m1, 'result/bert/amb_m1_bert.tsv', female_first=False)
     print('In externally oriented verb setting, the percentage of local binding:')
-    c3, len_sent3 = get_probability(verb_f1, 'verb_f1_xlm.tsv', female_first=True)
-    c4, len_sent4 = get_probability(verb_m1, 'verb_m1_xlm.tsv', female_first=False)
+    c3, len_sent3 = get_probability(verb_f1, 'result/bert/verb_f1_bert.tsv', female_first=True)
+    c4, len_sent4 = get_probability(verb_m1, 'result/bert/verb_m1_bert.tsv', female_first=False)
+    print('In internally oriented verb setting, the percentage of local binding:')
+    c14, len_sent14 = get_probability(in_verb_f1, 'result/bert/in_verb_f1_bert.tsv', female_first=True)
+    c15, len_sent15 = get_probability(in_verb_m1, 'result/bert/in_verb_m1_bert.tsv', female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
-    c5, len_sent5 = get_probability(blocking, 'blocking_xlm.tsv', blocking=True)
-    print('In animate (pro) setting, the percentage of local binding:')
-    c6, len_sent6 = get_probability(animacy_pro, 'animacy_pro_xlm.tsv', animacy=True)
+    c5, len_sent5 = get_probability(blocking, 'result/bert/blocking_bert.tsv', blocking=True)
     print('In animate (noun) setting, the percentage of local binding:')
-    c7, len_sent7 = get_probability(animacy_noun, 'animacy_noun_xlm.tsv', animacy=True)
+    c7, len_sent7 = get_probability(animacy_noun, 'result/bert/animacy_noun_bert.tsv', animacy=True)
     print('In subject orientation, the percentage of local binding:')
-    c8, len_sent8 = get_probability(subj_f1, 'subj_f1_xlm.tsv', female_first=True)
-    c9, len_sent9 = get_probability(subj_m1, 'subj_m1_xlm.tsv', female_first=False)
-    c = c1 + c2 + len_sent3 - c3 + len_sent4 - c4 + c5 + len_sent6 - c6 + len_sent7- c7 + len_sent8 - c8 + len_sent9 - c9
-    len_sent = len_sent1 + len_sent2 + len_sent3 + len_sent4 + len_sent5 + len_sent6 + len_sent7 + len_sent8 + len_sent9
+    c8, len_sent8 = get_probability(subj_f1, 'result/bert/subj_f1_bert.tsv', female_first=False)
+    c9, len_sent9 = get_probability(subj_m1, 'result/bert/subj_m1_bert.tsv', female_first=True)
+    print('In subject orientation in a gender-biased setting, the percentage of local binding:')
+    c10, len_sent10 = get_probability(subj_f1_bias, 'result/bert/subj_f1_bias_bert.tsv', female_first=False)
+    c11, len_sent11 = get_probability(subj_m1_bias, 'result/bert/subj_m1_bias_bert.tsv', female_first=True)
+    print('Local binding percentage:')
+    c12, len_sent12 = get_probability(local_f1, 'result/bert/local_f1.tsv', female_first=False)
+    c13, len_sent13 = get_probability(local_m1, 'result/bert/local_m1.tsv', female_first=True)
 
-    print(c, len_sent, c/len_sent)
+    # c = c1 + c2 + len_sent3 - c3 + len_sent4 - c4 + c5 + len_sent6 - c6 + len_sent7- c7 + len_sent8 - c8 + len_sent9 - c9
+    # len_sent = len_sent1 + len_sent2 + len_sent3 + len_sent4 + len_sent5 + len_sent6 + len_sent7 + len_sent8 + len_sent9
+
+    # print(c, len_sent, c/len_sent)
