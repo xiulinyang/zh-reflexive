@@ -122,6 +122,8 @@ if __name__=='__main__':
     # create_verb_pairs(out_verb, output_file='data/verb_m1.txt', female_first=False)
     # blocking_effect_generator(amb_verbs, output_file='data/blocking_amb.txt')
     # blocking_effect_generator(out_verb, output_file='data/blocking_verbs.txt')
+    create_verb_pairs(in_verb, output_file='data/in_verb_f1.txt')
+    create_verb_pairs(in_verb, output_file='data/in_verb_m1.txt', female_first=False)
     # animacy_effect(inanimate_nouns, inanimate_verbs, output_file='data/inanimate_nouns.txt')
     # animacy_effect(inanimate_pronoun, inanimate_verbs, output_file='data/inanimate_pron.txt')
     # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
