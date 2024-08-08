@@ -41,12 +41,11 @@ def get_probability(zh_sents, output, local_binding=False, female_first=True, bl
             if local_binding:
                 text= f'{s[:-3]}{mask}自己。'
             else:
-                # de_id = s.index('的')
-                # text = f'既然{s}，那么这{s[de_id+1:]}是{mask}的。'
-                # text = f'如果{s}, 那么这{s[de_id+1:]}是{mask}的。'
-                # print(text)
-
-                text = f'既然{s[:-1]},那么{s[-6:-3]}{mask}自己。'
+                if '的' in s:
+                    de_id = s.index('的')
+                    text = f'如果{s}, 那么这{s[de_id+1:]}是{mask}的。'
+                else:
+                    text = f'既然{s[:-1]},那么{s[-6:-3]}{mask}自己。'
                 # text = f'如果{s[:-1]},那么{mask}{s[-5:]}'
 
             predictions = nlp(text, targets=target)
