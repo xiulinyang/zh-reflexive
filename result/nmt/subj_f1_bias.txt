@@ -1,0 +1,125 @@
+她给他推荐自己的钱。	She recommended him with her money.
+她给他推荐自己的情妇。	She recommended him to his mistress.
+她给他推荐自己的财产。	She gave him his property.
+她给他推荐自己的印象。	She gave him an impression of herself.
+她给他推荐自己的生命。	She recommended his life to him.
+她给他推荐自己的目光。	She gave him her eyes.
+她给他推荐自己的敌人。	She recommended him to his enemies.
+她给他推荐自己的事业。	She recommended him for his career.
+她给他推荐自己的伙伴。	She recommended him to her partner.
+她给他推荐自己的球。	She recommended him to his own ball.
+她给他推荐自己的媳妇。	She recommended her daughter-in-law to him.
+她给他推荐自己的床。	She recommended him to his bed.
+她给他推荐自己的太太。	She recommended him to his wife.
+她给他推荐自己的家庭。	She recommended him to his family.
+她给他推荐自己的同伙。	She suggested to him her partner.
+她给他推荐自己的妻子。	She recommended him to his wife.
+她给他推荐自己的意见。	She gave him her opinion.
+她给他推荐自己的女人。	She recommended him to her own woman.
+她给他推荐自己的样子。	She recommended him to the look of herself.
+她给他推荐自己的夫人。	She recommended him to his wife.
+她给他推荐自己的作品。	She recommended his work to him.
+她给他推荐自己的兄弟。	She recommended him to his brother.
+她给他推荐自己的车。	She recommended him to his car.
+她给他推荐自己的烟。	She recommended him with his own cigarettes.
+她给他推荐自己的老婆。	She recommended him to his wife.
+她给他描述自己的钱。	She described her money to him.
+她给他描述自己的情妇。	She described to him her mistress.
+她给他描述自己的财产。	She described to him her property.
+她给他描述自己的印象。	She gave him an impression.
+她给他描述自己的生命。	She described his life to him.
+她给他描述自己的目光。	She showed him her eyes.
+她给他描述自己的敌人。	She described to him her enemies.
+她给他描述自己的事业。	She told him about her career.
+她给他描述自己的伙伴。	She described to him her partner.
+她给他描述自己的球。	She described him to his balls.
+她给他描述自己的媳妇。	She described her daughter-in-law to him.
+她给他描述自己的床。	She described him to his bed.
+她给他描述自己的太太。	She described his wife.
+她给他描述自己的家庭。	She described his family to him.
+她给他描述自己的同伙。	She described to him her associates.
+她给他描述自己的妻子。	She described his wife to him.
+她给他描述自己的意见。	She described her opinion to him.
+她给他描述自己的女人。	She described her woman to him.
+她给他描述自己的样子。	She told him what she looked like.
+她给他描述自己的夫人。	She described to him her wife.
+她给他描述自己的作品。	She described his work to him.
+她给他描述自己的兄弟。	She described to him her brother.
+她给他描述自己的车。	She gave him a description of her car.
+她给他描述自己的烟。	She gave him a description of her cigarettes.
+她给他描述自己的老婆。	She described his wife.
+她给他介绍自己的钱。	She introduced him to his money.
+她给他介绍自己的情妇。	She introduced him to her mistress.
+她给他介绍自己的财产。	She introduced him to his property.
+她给他介绍自己的印象。	She introduced him to his impressions.
+她给他介绍自己的生命。	She introduced him to his life.
+她给他介绍自己的目光。	She introduced him to his eyes.
+她给他介绍自己的敌人。	She introduced him to his enemies.
+她给他介绍自己的事业。	She introduced him to his career.
+她给他介绍自己的伙伴。	She introduced him to her partner.
+她给他介绍自己的球。	She introduced him to his balls.
+她给他介绍自己的媳妇。	She introduced him to her daughter-in-law.
+她给他介绍自己的床。	She introduced him to his bed.
+她给他介绍自己的太太。	She introduced him to his wife.
+她给他介绍自己的家庭。	She introduced him to his family.
+她给他介绍自己的同伙。	She introduced him to her associates.
+她给他介绍自己的妻子。	She introduced him to his wife.
+她给他介绍自己的意见。	She gave him her opinion.
+她给他介绍自己的女人。	She introduced him to her woman.
+她给他介绍自己的样子。	She introduced him to himself.
+她给他介绍自己的夫人。	She introduced him to her wife.
+她给他介绍自己的作品。	She introduced him to his work.
+她给他介绍自己的兄弟。	She introduced him to his brother.
+她给他介绍自己的车。	She introduced him to his car.
+她给他介绍自己的烟。	She introduced him to his cigarettes.
+她给他介绍自己的老婆。	She introduced him to his wife.
+她给他看自己的钱。	She showed him her money.
+她给他看自己的情妇。	She showed him her mistress.
+她给他看自己的财产。	She showed him her property.
+她给他看自己的印象。	She showed him her impressions.
+她给他看自己的生命。	She showed him her life.
+她给他看自己的目光。	She showed him her eyes.
+她给他看自己的敌人。	She showed him her enemies.
+她给他看自己的事业。	She showed him her career.
+她给他看自己的伙伴。	She showed him her partner.
+她给他看自己的球。	She showed him her balls.
+她给他看自己的媳妇。	She showed him her daughter-in-law.
+她给他看自己的床。	She showed him her bed.
+她给他看自己的太太。	She showed him her wife.
+她给他看自己的家庭。	She showed him her family.
+她给他看自己的同伙。	She showed him her partner.
+她给他看自己的妻子。	She showed him his wife.
+她给他看自己的意见。	She showed him her opinion.
+她给他看自己的女人。	She showed him her women.
+她给他看自己的样子。	She showed him what she looked like.
+她给他看自己的夫人。	She showed him her wife.
+她给他看自己的作品。	She showed him her work.
+她给他看自己的兄弟。	She showed him her brother.
+她给他看自己的车。	She showed him her car.
+她给他看自己的烟。	She showed him her cigarettes.
+她给他看自己的老婆。	She showed him his wife.
+她给他展示自己的钱。	She showed him her money.
+她给他展示自己的情妇。	She showed him her mistress.
+她给他展示自己的财产。	She showed him her property.
+她给他展示自己的印象。	She showed him her impressions.
+她给他展示自己的生命。	She showed him her life.
+她给他展示自己的目光。	She showed him her eyes.
+她给他展示自己的敌人。	She showed him her enemies.
+她给他展示自己的事业。	She showed him her career.
+她给他展示自己的伙伴。	She showed him her partner.
+她给他展示自己的球。	She showed him her balls.
+她给他展示自己的媳妇。	She showed him her daughter-in-law.
+她给他展示自己的床。	She showed him her bed.
+她给他展示自己的太太。	She showed him her wife.
+她给他展示自己的家庭。	She showed him her family.
+她给他展示自己的同伙。	She showed him her partner.
+她给他展示自己的妻子。	She showed him her wife.
+她给他展示自己的意见。	She showed him her opinion.
+她给他展示自己的女人。	She showed him her woman.
+她给他展示自己的样子。	She showed him what she looked like.
+她给他展示自己的夫人。	She showed him her wife.
+她给他展示自己的作品。	She showed him her work.
+她给他展示自己的兄弟。	She showed him her brother.
+她给他展示自己的车。	She showed him her car.
+她给他展示自己的烟。	She showed him her cigarettes.
+她给他展示自己的老婆。	She showed him her wife.

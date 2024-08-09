@@ -1,0 +1,125 @@
+他给她推荐自己的丈夫。	He recommended her husband.
+他给她推荐自己的胳膊。	He recommended her to his arm.
+他给她推荐自己的头发。	He gave her his hair.
+他给她推荐自己的身体。	He recommended her to her body.
+他给她推荐自己的美貌。	He recommended her to her for beauty.
+他给她推荐自己的裙子。	He recommended her to her dress.
+他给她推荐自己的胸脯。	He recommended her to his chest.
+他给她推荐自己的面颊。	He recommended her to her cheeks.
+他给她推荐自己的笑容。	He gave her his smile.
+他给她推荐自己的身材。	He recommended her figure.
+他给她推荐自己的肉体。	He gave her his body.
+他给她推荐自己的容貌。	He recommended her look.
+他给她推荐自己的处境。	He advised her about her situation.
+他给她推荐自己的脸庞。	He recommended her to his face.
+他给她推荐自己的笑声。	He gave her his laughter.
+他给她推荐自己的举止。	He recommended her to his manners.
+他给她推荐自己的形象。	He recommended her to his image.
+他给她推荐自己的脸蛋。	He recommended her to his face.
+他给她推荐自己的愿望。	He gave her his wishes.
+他给她推荐自己的照片。	He recommended her with his own photo.
+他给她推荐自己的关系。	He recommended her to her about her relationship.
+他给她推荐自己的姐姐。	He recommended her to her sister.
+他给她推荐自己的爱人。	He recommended her to her lover.
+他给她推荐自己的欢心。	He gave her his pleasure.
+他给她推荐自己的前额。	He gave her his forehead.
+他给她描述自己的丈夫。	He described her husband.
+他给她描述自己的胳膊。	He described her arm.
+他给她描述自己的头发。	He gave her a description of her hair.
+他给她描述自己的身体。	He gave her a description of her body.
+他给她描述自己的美貌。	He gave her a description of her beauty.
+他给她描述自己的裙子。	He gave her a description of her dress.
+他给她描述自己的胸脯。	He described her breasts.
+他给她描述自己的面颊。	He described her cheeks.
+他给她描述自己的笑容。	He described her smile.
+他给她描述自己的身材。	He described her figure.
+他给她描述自己的肉体。	He described her body.
+他给她描述自己的容貌。	He gave her a description of her face.
+他给她描述自己的处境。	He described her situation.
+他给她描述自己的脸庞。	He described her face.
+他给她描述自己的笑声。	He described her laughter.
+他给她描述自己的举止。	He gave her a description of how she behaved.
+他给她描述自己的形象。	He gave her a picture of herself.
+他给她描述自己的脸蛋。	He described her face.
+他给她描述自己的愿望。	He described her wish.
+他给她描述自己的照片。	He gave her a description of her picture.
+他给她描述自己的关系。	He described her relationship.
+他给她描述自己的姐姐。	He described her to her sister.
+他给她描述自己的爱人。	He described her love.
+他给她描述自己的欢心。	He described her joy.
+他给她描述自己的前额。	He gave her a description of her forehead.
+他给她介绍自己的丈夫。	He introduced her to her husband.
+他给她介绍自己的胳膊。	He introduced her to her arm.
+他给她介绍自己的头发。	He introduced her to her hair.
+他给她介绍自己的身体。	He introduced her to her body.
+他给她介绍自己的美貌。	He introduced her to her beauty.
+他给她介绍自己的裙子。	He introduced her to her dress.
+他给她介绍自己的胸脯。	He introduced her to her breasts.
+他给她介绍自己的面颊。	He introduced her to her cheeks.
+他给她介绍自己的笑容。	He introduced her to her smile.
+他给她介绍自己的身材。	He introduced her to her body.
+他给她介绍自己的肉体。	He introduced her to her body.
+他给她介绍自己的容貌。	He introduced her to her face.
+他给她介绍自己的处境。	He told her about her situation.
+他给她介绍自己的脸庞。	He introduced her to her face.
+他给她介绍自己的笑声。	He introduced her to her laughter.
+他给她介绍自己的举止。	He introduced her to her manners.
+他给她介绍自己的形象。	He introduced her to her image.
+他给她介绍自己的脸蛋。	He introduced her to her face.
+他给她介绍自己的愿望。	He introduced her to her wishes.
+他给她介绍自己的照片。	He introduced her to her photo.
+他给她介绍自己的关系。	He introduced her to her.
+他给她介绍自己的姐姐。	He introduced her to her sister.
+他给她介绍自己的爱人。	He introduced her to her lover.
+他给她介绍自己的欢心。	He introduced her to her joy.
+他给她介绍自己的前额。	He introduced her to her forehead.
+他给她看自己的丈夫。	He showed her his husband.
+他给她看自己的胳膊。	He showed her his arm.
+他给她看自己的头发。	He showed her his hair.
+他给她看自己的身体。	He showed her his body.
+他给她看自己的美貌。	He showed her his beauty.
+他给她看自己的裙子。	He showed her his dress.
+他给她看自己的胸脯。	He showed her his chest.
+他给她看自己的面颊。	He showed her his cheeks.
+他给她看自己的笑容。	He showed her his smile.
+他给她看自己的身材。	He showed her his body.
+他给她看自己的肉体。	He showed her his flesh.
+他给她看自己的容貌。	He showed her his face.
+他给她看自己的处境。	He showed her his situation.
+他给她看自己的脸庞。	He showed her his face.
+他给她看自己的笑声。	He showed her his laughter.
+他给她看自己的举止。	He showed her his manners.
+他给她看自己的形象。	He showed her his image.
+他给她看自己的脸蛋。	He showed her his face.
+他给她看自己的愿望。	He showed her his wish.
+他给她看自己的照片。	He showed her his picture.
+他给她看自己的关系。	He showed her his relationship.
+他给她看自己的姐姐。	He showed her his sister.
+他给她看自己的爱人。	He showed her his love.
+他给她看自己的欢心。	He showed her his joy.
+他给她看自己的前额。	He showed her his forehead.
+他给她展示自己的丈夫。	He showed her his husband.
+他给她展示自己的胳膊。	He showed her his arms.
+他给她展示自己的头发。	He showed her his hair.
+他给她展示自己的身体。	He showed her his body.
+他给她展示自己的美貌。	He showed her his beauty.
+他给她展示自己的裙子。	He showed her his dress.
+他给她展示自己的胸脯。	He showed her his chest.
+他给她展示自己的面颊。	He showed her his cheeks.
+他给她展示自己的笑容。	He showed her his smile.
+他给她展示自己的身材。	He showed her his figure.
+他给她展示自己的肉体。	He showed her his body.
+他给她展示自己的容貌。	He showed her his face.
+他给她展示自己的处境。	He showed her his situation.
+他给她展示自己的脸庞。	He showed her his face.
+他给她展示自己的笑声。	He showed her his laughter.
+他给她展示自己的举止。	He showed her his manners.
+他给她展示自己的形象。	He showed her his image.
+他给她展示自己的脸蛋。	He showed her his face.
+他给她展示自己的愿望。	He showed her his wish.
+他给她展示自己的照片。	He showed her his pictures.
+他给她展示自己的关系。	He showed her his relationship.
+他给她展示自己的姐姐。	He showed her his sister.
+他给她展示自己的爱人。	He showed her his love.
+他给她展示自己的欢心。	He showed her his joy.
+他给她展示自己的前额。	He showed her his forehead.

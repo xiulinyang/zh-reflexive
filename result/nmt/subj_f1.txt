@@ -1,0 +1,106 @@
+她给他关于自己的书。	She gave him about her book.
+她给他关于自己的信。	She gave him a letter about herself.
+她给他关于自己的结果。	She gave him about her results.
+她给他关于自己的问题。	She gave him questions about herself.
+她给他关于自己的成绩。	She gave him his grades.
+她给他关于自己的钱。	She gave him her money.
+她给他关于自己的经验。	She gave him experience about herself.
+她给他关于自己的计划。	She gave him her plan.
+她给他关于自己的意见。	She gave him his opinion.
+她给他关于自己的想法。	She gave him ideas about herself.
+她送给他关于自己的书。	She gave him a book about her.
+她送给他关于自己的信。	She sent him a letter about herself.
+她送给他关于自己的结果。	She gave him the results about herself.
+她送给他关于自己的问题。	She gave him questions about herself.
+她送给他关于自己的话。	She gave him a word about herself.
+她送给他关于自己的成绩。	She gave him his grades.
+她送给他关于自己的钱。	She gave him money about herself.
+她送给他关于自己的经验。	She gave him experience.
+她送给他关于自己的生日。	She gave him about her birthday.
+她送给他关于自己的计划。	She gave him a plan about herself.
+她送给他关于自己的意见。	She gave him her opinion.
+她送给他关于自己的想法。	She gave him ideas about herself.
+她告诉他关于自己的书。	She told him about his book.
+她告诉他关于自己的信。	She told him about her letter.
+她告诉他关于自己的结果。	She told him about her results.
+她告诉他关于自己的问题。	She told him about her.
+她告诉他关于自己的话。	She told him about herself.
+她告诉他关于自己的成绩。	She told him about her grades.
+她告诉他关于自己的钱。	She told him about his money.
+她告诉他关于自己的经验。	She told him about her experience.
+她告诉他关于自己的生日。	She told him about her birthday.
+她告诉他关于自己的计划。	She told him about her plan.
+她告诉他关于自己的意见。	She told him about her opinion.
+她告诉他关于自己的想法。	She told him what she thought about herself.
+她通知他关于自己的书。	She informed him about his book.
+她通知他关于自己的信。	She informed him about his letter.
+她通知他关于自己的结果。	She informed him about her results.
+她通知他关于自己的问题。	She informed him of her problems.
+她通知他关于自己的话。	She informed him about herself.
+她通知他关于自己的成绩。	She informed him about her grades.
+她通知他关于自己的钱。	She informed him about his money.
+她通知他关于自己的经验。	She informed him of her experience.
+她通知他关于自己的生日。	She informed him about her birthday.
+她通知他关于自己的计划。	She informed him about her plans.
+她通知他关于自己的意见。	She informed him of her comments.
+她通知他关于自己的想法。	She informed him of her thoughts.
+她寄给他关于自己的书。	She sent him a book about her.
+她寄给他关于自己的信。	She sent him a letter about herself.
+她寄给他关于自己的结果。	She sent him about her results.
+她寄给他关于自己的问题。	She sent him questions about herself.
+她寄给他关于自己的话。	She sent him a message about herself.
+她寄给他关于自己的成绩。	She sent him about her grades.
+她寄给他关于自己的钱。	She sent him money about her.
+她寄给他关于自己的经验。	She sent him about her experience.
+她寄给他关于自己的生日。	She sent him about her birthday.
+她寄给他关于自己的计划。	She sent him about her plan.
+她寄给他关于自己的意见。	She sent him an opinion about herself.
+她寄给他关于自己的想法。	She sent him ideas about herself.
+她提供他关于自己的书。	She offered him a book about himself.
+她提供他关于自己的信。	She provided him with letters about herself.
+她提供他关于自己的结果。	She provides his results.
+她提供他关于自己的问题。	She provides him with questions about herself.
+她提供他关于自己的话。	She provides his own words.
+她提供他关于自己的成绩。	She offered him his grades.
+她提供他关于自己的钱。	She offered him money about himself.
+她提供他关于自己的经验。	She provides his own experience.
+她提供他关于自己的生日。	She offered him his birthday.
+她提供他关于自己的计划。	She offered him his plans.
+她提供他关于自己的意见。	She provides his observations on her own.
+她提供他关于自己的想法。	She offered him ideas about herself.
+她拒绝回答他关于自己的书。	She refused to answer him about her book.
+她拒绝回答他关于自己的信。	She refused to answer his letter.
+她拒绝回答他关于自己的结果。	She refused to answer him about her results.
+她拒绝回答他关于自己的问题。	She refused to answer his questions about herself.
+她拒绝回答他关于自己的话。	She refused to answer his remarks about herself.
+她拒绝回答他关于自己的成绩。	She refused to answer him about her grades.
+她拒绝回答他关于自己的钱。	She refused to answer him about her money.
+她拒绝回答他关于自己的经验。	She refused to answer him about her experience.
+她拒绝回答他关于自己的生日。	She refused to answer him about her birthday.
+她拒绝回答他关于自己的计划。	She refused to answer him about her plans.
+她拒绝回答他关于自己的意见。	She refused to respond to his comments.
+她拒绝回答他关于自己的想法。	She refused to answer his thoughts about herself.
+她提醒他关于自己的书。	She reminded him about his book.
+她提醒他关于自己的信。	She reminded him of his letter.
+她提醒他关于自己的结果。	She reminded him of her results.
+她提醒他关于自己的问题。	She reminded him of his problems.
+她提醒他关于自己的话。	She reminded him of what she said.
+她提醒他关于自己的成绩。	She reminded him of his grades.
+她提醒他关于自己的钱。	She reminded him about his money.
+她提醒他关于自己的经验。	She reminded him of her experience.
+她提醒他关于自己的生日。	She reminded him about his birthday.
+她提醒他关于自己的计划。	She reminded him of her plans.
+她提醒他关于自己的意见。	She reminded him of his views.
+她提醒他关于自己的想法。	She reminded him of her thoughts.
+她推荐他关于自己的书。	She recommended him for his book.
+她推荐他关于自己的信。	She recommended him for his letter.
+她推荐他关于自己的结果。	She recommended him about his results.
+她推荐他关于自己的问题。	She recommended him on his own.
+她推荐他关于自己的话。	She recommended him for his own words.
+她推荐他关于自己的成绩。	She recommended him about his grades.
+她推荐他关于自己的钱。	She recommended him about his money.
+她推荐他关于自己的经验。	She recommended his experience.
+她推荐他关于自己的生日。	She recommended him about his birthday.
+她推荐他关于自己的计划。	She recommended him on his own plan.
+她推荐他关于自己的意见。	She recommended his opinion on himself.
+她推荐他关于自己的想法。	She recommended his thoughts on himself.
