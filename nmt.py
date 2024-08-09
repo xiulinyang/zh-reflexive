@@ -23,12 +23,16 @@ subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().
 natural_local_m = Path('data/filtered_sents_local_m_binding.txt').read_text().strip().split('\n')
 natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().strip().split('\n')
 
+natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
+natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
+natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
+
 
 ldb = Path('data/real_data_ldb.txt').read_text().strip().split('\n')
 lb = Path('data/real_data_lb.txt').read_text().strip().split('\n')
 
 def get_prediction(zh_sents, pred_name, female_first=False, block_first=False, animacy=False):
-    srcs = zh_sents
+    srcs = [x.split()[0] for x in zh_sents]
     c =0
     batch = tokenizer.prepare_seq2seq_batch(src_texts=srcs, return_tensors="pt")
 
@@ -69,8 +73,12 @@ def get_prediction(zh_sents, pred_name, female_first=False, block_first=False, a
 
 if __name__ == '__main__':
     print('In local binding setting, the percentage of local binding:')
-    get_prediction(natural_local_f, 'result/nmt/natural_local_f1.txt',female_first=False)
-    get_prediction(natural_local_m, 'result/nmt/natural_local_m1.txt',female_first=True)
+    # get_prediction(natural_local_f, 'result/nmt/natural_local_f1.txt',female_first=False)
+    # get_prediction(natural_local_m, 'result/nmt/natural_local_m1.txt',female_first=True)
+
+    get_prediction(natural_local_verb, 'result/nmt/natural_local_verb.txt', female_first=True)
+    get_prediction(natural_long_verb, 'result/nmt/natural_long_verb.txt', female_first=True)
+    get_prediction(natural_long_anim, 'result/nmt/natural_long_anim.txt', female_first=True)
 
     # # print('In local binding setting, the percentage of local binding:')
     # # get_prediction(local_f1, 'result/nmt/local_f1.txt',female_first=False)

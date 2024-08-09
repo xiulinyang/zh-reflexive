@@ -38,8 +38,9 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
         for sent in zh_sents:
-
-            sent=f'在“{sent}”这句话中，自己指的是'
+            ziji_index = sent.index('自')
+            sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
+            sent = f'在“{sent}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
             token_ids = encoded_input['input_ids']
 

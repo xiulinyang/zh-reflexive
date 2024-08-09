@@ -9,9 +9,9 @@ from transformers import logging
 
 logging.set_verbosity_error()
 # tokenizer = AutoTokenizer.from_pretrained('FacebookAI/xlm-roberta-base')
-model = 'xlm-roberta-base'
+# model = 'xlm-roberta-base'
 # model = 'google-bert/bert-base-chinese'
-# model = 'google-bert/bert-base-multilingual-cased'
+model = 'google-bert/bert-base-multilingual-cased'
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
 local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
@@ -32,7 +32,8 @@ natural_local_m = Path('data/filtered_sents_local_m_binding.txt').read_text().st
 natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().strip().split('\n')
 
 natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
-
+natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
+natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
 # Tokenize input
 def get_probability(zh_sents, output, task=None,  female_first=True, blocking = False, animacy =False):
 # Get logits from the model
