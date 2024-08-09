@@ -27,7 +27,8 @@ natural_local_m = Path('data/filtered_sents_local_m_binding.txt').read_text().st
 natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().strip().split('\n')
 
 natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
-
+natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
+natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
 def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False):
 # Get logits from the model
     c=0
@@ -153,6 +154,8 @@ def test_real_data(zh_sents, output):
 
 if __name__ == '__main__':
     test_real_data(natural_local_verb, 'test.tsv')
+    test_real_data(natural_long_verb, 'test.tsv')
+    test_real_data(natural_long_anim, 'test.tsv')
     # print('In ambiguous setting, the percentage of local binding:')
     # c1, len_sent1 = get_probability(amb_f1, 'result/glm/amb_f1_glm.tsv', female_first=True)
     # c2, len_sent2 = get_probability(amb_m1, 'result/glm/amb_m1_glm.tsv', female_first=False)
