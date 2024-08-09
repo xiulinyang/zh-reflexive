@@ -149,8 +149,15 @@ def test_real_data(zh_sents, output):
                 f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
 
-            print(all_prob)
-            # if
+            if label2target[all_prob[0][0]] == sentence[1]:
+                c+=1
+
+            else:
+                print(sentence[0])
+                print(all_prob)
+
+        print(c, len(zh_sents))
+        print(c / len(zh_sents))
 
 if __name__ == '__main__':
     test_real_data(natural_local_verb, 'test.tsv')
