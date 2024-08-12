@@ -102,13 +102,13 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     return c, len(zh_sents)
 
 
-def test_real_data(input_file, output):
+def test_real_data(zh_sents, output):
     c = 0
     f = []
     m = []
     w = []
     t = []
-    zh_sents = [x.split() for x in Path(input_file).read_text().strip().split('\n')]
+    zh_sents = [x.split() for x in zh_sents]
     label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
@@ -168,6 +168,8 @@ if __name__ == '__main__':
         os.mkdir(f'result/{args.model}')
     except:
         pass
+
+    natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
     c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv',  female_first=False)
@@ -175,9 +177,9 @@ if __name__ == '__main__':
     c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', female_first=True)
 
     print('real data: reflexive verb, local binding')
-    c3, all3 = test_real_data('data/real_data_lb_name.txt', f'result/{args.model}/lb_name.tsv')
+    c3, all3 = test_real_data(natural_local_verb, f'result/{args.model}/lb_name.tsv')
     print('real data: non-reflexive verb, long-distance binding')
-    c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
+    c4, all4 = test_real_data(natural_long_verb, f'result/{args.model}/ldb_name.tsv')
     print('real data: animacy effect, long-distance binding')
     c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv')
 
