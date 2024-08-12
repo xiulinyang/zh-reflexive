@@ -102,13 +102,13 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     return c, len(zh_sents)
 
 
-def test_real_data(zh_sents, output):
+def test_real_data(input_file, output):
     c = 0
     f = []
     m = []
     w = []
     t = []
-    zh_sents = [x.split() for x in zh_sents]
+    zh_sents = [x.split() for x in Path(input_file).read_text().strip().split('\n')]
     label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
     with open(output, 'w') as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
