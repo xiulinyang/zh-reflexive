@@ -2,9 +2,11 @@
 她给他关于自己的信。	She gave him a letter about herself.
 她给他关于自己的结果。	She gave him about her results.
 她给他关于自己的问题。	She gave him questions about herself.
+她给他关于自己的话。	She gave him a word about herself.
 她给他关于自己的成绩。	She gave him his grades.
 她给他关于自己的钱。	She gave him her money.
 她给他关于自己的经验。	She gave him experience about herself.
+她给他关于自己的生日。	She gave him her birthday.
 她给他关于自己的计划。	She gave him her plan.
 她给他关于自己的意见。	She gave him his opinion.
 她给他关于自己的想法。	She gave him ideas about herself.
