@@ -32,7 +32,7 @@ natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().st
 natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False):
+def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False, verbose=False):
 # Get logits from the model
     c=0
     f = []
@@ -71,8 +71,6 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
             next_word_probability_w = softmax_probs[0, -1, next_word_id_w].item()
             next_word_probability_t = softmax_probs[0, -1, next_word_id_t].item()
 
-
-
             f.append(next_word_probability_her)
             m.append(next_word_probability_him)
             w.append(next_word_probability_w)
@@ -80,13 +78,18 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
 
             all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
                         'w': next_word_probability_w, 't': next_word_probability_t}
+
+
             out_tsv.write(f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
+
+            if verbose:
+                print(sent, all_prob)
             if blocking:
                 if all_prob[0][0] =='w':
                     c += 1
             elif animacy:
-                if all_prob[0][0] =='t':
+                if all_prob[0][0] !='t':
                     c+=1
             else:
                 if female_first:
@@ -149,7 +152,6 @@ def test_real_data(zh_sents, output):
 
             if label2target[all_prob[0][0]] == sentence[1]:
                 c+=1
-
             else:
                 print(sentence[0])
                 print(all_prob)
@@ -168,9 +170,9 @@ if __name__ == '__main__':
         pass
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
-    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', female_first=False)
+    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv',  female_first=False)
     print('real data: local binding, male binder')
-    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', female_first=True)
+    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', female_first=True)
 
     print('real data: reflexive verb, local binding')
     c3, all3 = test_real_data('data/real_data_lb_name.txt', f'result/{args.model}/lb_name.tsv')
@@ -185,8 +187,8 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax', female_first=False)
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax', female_first=True)
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  female_first=False)
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  female_first=True)
     print('In ambiguous setting, the percentage of local binding:')
     c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', female_first=True)
     c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', female_first=False)
@@ -197,15 +199,15 @@ if __name__ == '__main__':
     c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', female_first=True)
     c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', female_first=False)
     print('In the blocking effect setting, the percentage of local binding:')
-    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax', blocking=True)
+    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv',  blocking=True)
     print('In animate setting, the percentage of long-distance binding:')
     c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', animacy=True)
     print('In subject orientation, the percentage of local binding:')
-    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', female_first=False)
-    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', female_first=True)
+    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv',  female_first=False)
+    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv',  female_first=True)
     print('In subject orientation in a gender-biased setting, the percentage of local binding:')
-    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', female_first=False)
-    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', female_first=True)
+    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv',  female_first=False)
+    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv',  female_first=True)
 
     print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
     syn_c = c6+c7+c8+c9+all10-c10+all11-c11+c12+c13+c14+c15+c16+c17+c18+c19
