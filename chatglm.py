@@ -102,7 +102,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     return c, len(zh_sents)
 
 
-def test_real_data(zh_sents, output):
+def test_real_data(zh_sents, output, verbose=False):
     c = 0
     f = []
     m = []
@@ -153,8 +153,11 @@ def test_real_data(zh_sents, output):
             if label2target[all_prob[0][0]] == sentence[1]:
                 c+=1
             else:
-                print(sentence[0])
-                print(all_prob)
+                if verbose:
+                    print(sentence[0])
+                    print(all_prob)
+                else:
+                    pass
 
         print(f'{c}\t{len(zh_sents)}\t{c / len(zh_sents)}')
     return c, len(zh_sents)
@@ -181,7 +184,7 @@ if __name__ == '__main__':
     print('real data: non-reflexive verb, long-distance binding')
     c4, all4 = test_real_data(natural_long_verb, f'result/{args.model}/ldb_name.tsv')
     print('real data: animacy effect, long-distance binding')
-    c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv')
+    c5, all5 = test_real_data(natural_long_anim, f'result/{args.model}/ldb_anim.tsv')
 
     real_c = c1+c2+c3+c4+c5
     real_all = all1+all2+all3+all4+all5
