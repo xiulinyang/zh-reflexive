@@ -24,7 +24,7 @@ subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().
 natural_local_m = Path('data/filtered_sents_local_m_binding.txt').read_text().strip().split('\n')
 natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().strip().split('\n')
 
-natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
+natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
 

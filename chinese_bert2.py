@@ -34,7 +34,7 @@ subj_m1_bias = Path('data/subject_orientation_m1_bias.txt').read_text().strip().
 natural_local_m = Path('data/filtered_sents_local_m_binding.txt').read_text().strip().split('\n')
 natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().strip().split('\n')
 
-natural_local_verb = Path('data/real_data_lb_name.txt').read_text().strip().split('\n')
+natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
 
@@ -44,7 +44,7 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
     # Get logits from the model
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
-    with open(output, 'w') as out_tsv:
+    with open(output, 'w', encoding="utf-8") as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
         c = 0
         target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
@@ -131,6 +131,7 @@ if __name__ == '__main__':
         os.mkdir(f'result/{args.model}')
     except:
         pass
+
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
     c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', female_first=False)
@@ -138,7 +139,7 @@ if __name__ == '__main__':
     c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', female_first=True)
 
     print('real data: reflexive verb, local binding')
-    c3, all3 = test_real_data('data/real_data_lb_name.txt', f'result/{args.model}/lb_name.tsv')
+    c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
     print('real data: non-reflexive verb, long-distance binding')
     c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
     print('real data: animacy effect, long-distance binding')
