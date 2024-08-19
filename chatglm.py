@@ -39,7 +39,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     m = []
     w = []
     t = []
-    with open(output, 'w') as out_tsv:
+    with open(output, 'w', encoding="utf-8") as out_tsv:
         out_tsv.write('he\ther\tme\tit\n')
         for sent in zh_sents:
             ziji_index = sent.index('自')
@@ -80,7 +80,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
                         'w': next_word_probability_w, 't': next_word_probability_t}
 
 
-            out_tsv.write(f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
+            out_tsv.write(f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
             print(sent)
             print(all_prob)
