@@ -45,7 +45,7 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+        out_tsv.write('prompt\the\ther\tme\tit\n')
         c = 0
         target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
         target = ['他', '她', '我', '它']
@@ -71,7 +71,7 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
             f = all_prob['f']
             w = all_prob['w']
             t = all_prob['t']
-            out_tsv.write(f'{m}\t{f}\t{w}\t{t}\n')
+            out_tsv.write(f'{text}\t{m}\t{f}\t{w}\t{t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
             if verbose:
                 print(text, all_prob)
@@ -96,8 +96,8 @@ def test_real_data(input_file, output_file, verbose=False):
     input_sents = [x.split() for x in Path(input_file).read_text().strip().split('\n')]
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
-    with open(output_file, 'w') as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+    with open(output_file, 'w', encoding='utf-8') as out_tsv:
+        out_tsv.write('prompt\the\ther\tme\tit\n')
         c = 0
         target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
         label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
@@ -106,6 +106,8 @@ def test_real_data(input_file, output_file, verbose=False):
             text = f'如果{s[0][:-1]}，那么{s[2][:-2]}{mask}。'
             predictions = nlp(text, targets=target)
             all_prob = {target_dic[x['token_str']]: x['score'] for x in predictions}
+            m, f, w, t = all_prob['m'],all_prob['f'],all_prob['w'],all_prob['t']
+            out_tsv.write(f'{text}\t{m}\t{f}\t{w}\t{t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
             pred = label2target[all_prob[0][0]]
 
