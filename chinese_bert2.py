@@ -130,11 +130,11 @@ if __name__ == '__main__':
         os.mkdir(f'result/{args.model}')
     except:
         pass
-    if args.m =='chinesebert':
+    if args.model =='chinesebert':
         model = 'google-bert/bert-base-chinese'
-    elif args.m =='xlm':
+    elif args.model =='xlm':
         model = 'xlm-roberta-base'
-    elif args.m == 'mbert':
+    elif args.model == 'mbert':
        model = 'google-bert/bert-base-multilingual-cased'
     else:
         raise ValueError('invalid model name!')
