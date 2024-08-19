@@ -40,7 +40,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     w = []
     t = []
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('sent\he\ther\tme\tit\n')
+        out_tsv.write('sent\the\ther\tme\tit\n')
         for sent in zh_sents:
             ziji_index = sent.index('自')
             sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
