@@ -11,10 +11,7 @@ from tqdm import tqdm
 from transformers import logging
 
 logging.set_verbosity_error()
-# tokenizer = AutoTokenizer.from_pretrained('FacebookAI/xlm-roberta-base')
-model = 'xlm-roberta-base'
-# model = 'google-bert/bert-base-chinese'
-# model = 'google-bert/bert-base-multilingual-cased'
+
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
 local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
@@ -127,12 +124,20 @@ def test_real_data(input_file, output_file, verbose=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', type=str, help='the evaluated model', required=True)
+    parser.add_argument('-m', '--model', type=str, help='the evaluated model, available options: [chinesebert, xlm, mbert]', required=True)
     args = parser.parse_args()
     try:
         os.mkdir(f'result/{args.model}')
     except:
         pass
+    if args.m =='chinesebert':
+        model = 'google-bert/bert-base-chinese'
+    elif args.m =='xlm':
+        model = 'xlm-roberta-base'
+    elif args.m == 'mbert':
+       model = 'google-bert/bert-base-multilingual-cased'
+    else:
+        raise ValueError('invalid model name!')
 
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
