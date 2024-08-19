@@ -12,9 +12,9 @@ from transformers import logging
 
 logging.set_verbosity_error()
 # tokenizer = AutoTokenizer.from_pretrained('FacebookAI/xlm-roberta-base')
-# model = 'xlm-roberta-base'
+model = 'xlm-roberta-base'
 # model = 'google-bert/bert-base-chinese'
-model = 'google-bert/bert-base-multilingual-cased'
+# model = 'google-bert/bert-base-multilingual-cased'
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
 local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
 amb_f1 = Path('data/amb_f1.txt').read_text().strip().split('\n')
@@ -50,9 +50,13 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
         target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
         target = ['他', '她', '我', '它']
         for s in tqdm(zh_sents):
+
             if task == 'syntax':
                 ziji_index = s.index('自')
-                text = f'{s[:ziji_index - 1]}{mask}{s[ziji_index:]}'
+                text = f'{s[:ziji_index-1]}{mask}{s[ziji_index:]}'
+            elif task =='syntax2':
+                ziji_index = s.index('自')
+                text = f'{s[:ziji_index]}{mask}{s[ziji_index:]}'
             elif task == 'subject_orientation':
                 de_id = s.index('的')
                 end_id = s.index('。')
@@ -146,8 +150,8 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax', female_first=False)
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax', female_first=True)
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', female_first=False)
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', female_first=True)
     print('In ambiguous setting, the percentage of local binding:')
     c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', female_first=True)
     c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', female_first=False)
