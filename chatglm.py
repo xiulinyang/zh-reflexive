@@ -82,7 +82,8 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
 
             out_tsv.write(f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
-
+            print(sent)
+            print(all_prob)
             if verbose:
                 print(sent, all_prob)
             if blocking:
@@ -149,7 +150,8 @@ def test_real_data(zh_sents, output, verbose=False):
             out_tsv.write(
                 f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
-
+            print(sent)
+            print(all_prob)
             if label2target[all_prob[0][0]] == sentence[1]:
                 c+=1
             else:
