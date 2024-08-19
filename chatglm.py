@@ -40,7 +40,7 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     w = []
     t = []
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+        out_tsv.write('sent\he\ther\tme\tit\n')
         for sent in zh_sents:
             ziji_index = sent.index('自')
             sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
@@ -111,8 +111,8 @@ def test_real_data(zh_sents, output, verbose=False):
     t = []
     zh_sents = [x.split() for x in zh_sents]
     label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
-    with open(output, 'w') as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+    with open(output, 'w',encoding='utf-8') as out_tsv:
+        out_tsv.write('sent\the\ther\tme\tit\n')
         for sentence in zh_sents:
             sent = f'在“{sentence[0]}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
@@ -148,7 +148,7 @@ def test_real_data(zh_sents, output, verbose=False):
                         'w': next_word_probability_w, 't': next_word_probability_t}
 
             out_tsv.write(
-                f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
+                f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
             print(sent)
             print(all_prob)
