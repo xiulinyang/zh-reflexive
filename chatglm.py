@@ -112,7 +112,7 @@ def test_real_data(zh_sents, output, verbose=False):
     zh_sents = [x.split() for x in zh_sents]
     label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
     with open(output, 'w',encoding='utf-8') as out_tsv:
-        out_tsv.write('sent\the\ther\tme\tit\n')
+        out_tsv.write('sent\tthe\ther\tme\tit\n')
         for sentence in zh_sents:
             sent = f'在“{sentence[0]}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
