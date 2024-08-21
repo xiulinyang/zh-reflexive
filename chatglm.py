@@ -4,6 +4,9 @@ import torch.nn.functional as F
 from pathlib import Path
 import argparse
 import os
+from scipy.special import softmax
+from collections import Counter
+
 
 # Initialize tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
@@ -32,132 +35,86 @@ natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().st
 natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, blocking = False, female_first=False, animacy=False, verbose=False):
+def get_probability(zh_sents, output, task, antecedent = None, antecedent_list = None, verbose=False):
 # Get logits from the model
     c=0
-    f = []
-    m = []
-    w = []
-    t = []
-    n = []
+    target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('he\ther\tme\tit\tyou\n')
         for sent in zh_sents:
             ziji_index = sent.index('自')
             sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
             sent = f'在“{sent}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
-            token_ids = encoded_input['input_ids']
 
             with torch.no_grad():
                 outputs = model(**encoded_input)
                 logits = outputs.logits  # Assuming the model outputs include logits
 
-            next_word_m = '他'
-            next_word_f = '她'
-            next_word_w = '我'
-            next_word_t = '它'
-            next_word_n = '你'
-
-            next_word_id_m = tokenizer.encode(next_word_m, add_special_tokens=False)[0]
-            next_word_id_f = tokenizer.encode(next_word_f, add_special_tokens=False)[0]
-            next_word_id_w = tokenizer.encode(next_word_w, add_special_tokens=False)[0]
-            next_word_id_t = tokenizer.encode(next_word_t, add_special_tokens=False)[0]
-            next_word_id_n = tokenizer.encode(next_word_n, add_special_tokens=False)[0]
-
+            target_dic = {x:y for x, y in target_dic.items() if y in antecedent_list}
+            next_word_ids = {x:tokenizer.encode(x, add_special_tokens=False)[0] for x, y in target_dic.items()}
             softmax_probs = F.softmax(logits, dim=-1)
+            all_prob = {y: softmax_probs[0, -1, next_word_ids[x]].item() for x, y in target_dic.items()}
+            scores = softmax([y for _,y in all_prob.items()])
+            preds = [x for x, _ in all_prob.items()]
+            all_prob = {x: y for x, y in zip(preds, scores)}
+            prob_to_write = '\t'.join([x + ':' + str(y) for x, y in all_prob.items()])
+            out_tsv.write(f'{sent}\t{prob_to_write}\n')
+            all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
 
-
-            next_word_probability_him = softmax_probs[0, -1, next_word_id_m].item()
-            next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
-            next_word_probability_w = softmax_probs[0, -1, next_word_id_w].item()
-            next_word_probability_t = softmax_probs[0, -1, next_word_id_t].item()
-            next_word_probability_n = softmax_probs[0, -1, next_word_id_n].item()
-
-            f.append(next_word_probability_her)
-            m.append(next_word_probability_him)
-            w.append(next_word_probability_w)
-            t.append(next_word_probability_t)
-            n.append(next_word_probability_n)
-
-            all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
-                        'w': next_word_probability_w, 't': next_word_probability_t, 'n':next_word_probability_n}
-
-
-            out_tsv.write(f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\t{next_word_probability_n}\n')
-            all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
-            print(sent)
-            print(all_prob)
             if verbose:
                 print(sent, all_prob)
-            if blocking:
-                if all_prob[0][0] =='w':
+
+            if antecedent == 'w':
+                if all_prob[0][0] == 'w':
                     c += 1
-            elif animacy:
-                if all_prob[0][0] !='t':
-                    c+=1
+            elif antecedent == 'f':
+                if all_prob[0][0] == 'f':
+                    c += 1
+            elif antecedent == 'm':
+                if all_prob[0][0] == 'm':
+                    c += 1
+            elif antecedent == 'n':
+                if all_prob[0][0] == 'n':
+                    c += 1
             else:
-                if female_first:
-                   if all_prob[0][0]=='m':
-                        c+=1
-                elif not female_first:
-                    if all_prob[0][0]=='f':
-                        c+=1
+                if all_prob[0][0] != 't':
+                    c += 1
         print(f'{c}\t{len(zh_sents)}\t{c / len(zh_sents)}')
     return c, len(zh_sents)
 
 
-def test_real_data(zh_sents, output, verbose=False):
+def test_real_data(zh_sents, output, task = None, verbose=False):
     c = 0
-    f = []
-    m = []
-    w = []
-    t = []
     zh_sents = [x.split() for x in zh_sents]
-    label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它','n':'你'}
-    with open(output, 'w') as out_tsv:
-        out_tsv.write('he\ther\tme\tit\tyou\n')
+    target2label = {'她':'f', '他':'m', '我':'w', '它':'t'}
+    with open(output, 'w',encoding='utf-8') as out_tsv:
         for sentence in zh_sents:
             sent = f'在“{sentence[0]}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
-            token_ids = encoded_input['input_ids']
 
             with torch.no_grad():
                 outputs = model(**encoded_input)
                 logits = outputs.logits  # Assuming the model outputs include logits
-
-            next_word_m = '他'
-            next_word_f = '她'
-            next_word_w = '我'
-            next_word_t = '它'
-            next_word_n = '你'
-
-            next_word_id_m = tokenizer.encode(next_word_m, add_special_tokens=False)[0]
-            next_word_id_f = tokenizer.encode(next_word_f, add_special_tokens=False)[0]
-            next_word_id_w = tokenizer.encode(next_word_w, add_special_tokens=False)[0]
-            next_word_id_t = tokenizer.encode(next_word_t, add_special_tokens=False)[0]
-            next_word_id_n = tokenizer.encode(next_word_n, add_special_tokens=False)[0]
-
+            freq_char = Counter(sent)
+            if task =='animacy':
+                to_add_antecedent = ['她','他','它']
+            elif task == 'blocking':
+                to_add_antecedent = ['她','他','我']
+            else:
+                to_add_antecedent = ['她', '他']
+            antecedent_list = list(set([x for x, y in target2label.items() if freq_char[x] > 0 or x in to_add_antecedent]))
+            target_dic = {x: y for x, y in target2label.items() if y in antecedent_list}
+            label2target = {y:x for x, y in target_dic.items()}
+            next_word_ids = {x: tokenizer.encode(x, add_special_tokens=False)[0] for x, y in target_dic.items()}
             softmax_probs = F.softmax(logits, dim=-1)
-
-            next_word_probability_him = softmax_probs[0, -1, next_word_id_m].item()
-            next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
-            next_word_probability_w = softmax_probs[0, -1, next_word_id_w].item()
-            next_word_probability_t = softmax_probs[0, -1, next_word_id_t].item()
-            next_word_probability_n = softmax_probs[0, -1, next_word_id_n].item()
-
-            f.append(next_word_probability_her)
-            m.append(next_word_probability_him)
-            w.append(next_word_probability_w)
-            t.append(next_word_probability_t)
-            n.append(next_word_probability_n)
-
-            all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
-                        'w': next_word_probability_w, 't': next_word_probability_t, 'n': next_word_probability_n}
-
-            out_tsv.write(
-                f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\t{next_word_probability_n}\n')
+            all_prob = {y: softmax_probs[0, -1, next_word_ids[x]].item() for x, y in target_dic.items()}
+            scores = softmax([y for _, y in all_prob.items()])
+            preds = [x for x, _ in all_prob.items()]
+            all_prob = {x: y for x, y in zip(preds, scores)}
+            prob_to_write = '\t'.join([x + ':' + str(y) for x, y in all_prob.items()])
+            out_tsv.write(f'{sent}\t{prob_to_write}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
+
             print(sent)
             print(all_prob)
             if label2target[all_prob[0][0]] == sentence[1]:
@@ -185,16 +142,16 @@ if __name__ == '__main__':
     natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
-    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv',  female_first=False)
+    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
     print('real data: local binding, male binder')
-    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', female_first=True)
+    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
 
     print('real data: reflexive verb, local binding')
     c3, all3 = test_real_data(natural_local_verb, f'result/{args.model}/lb_name.tsv')
     print('real data: non-reflexive verb, long-distance binding')
     c4, all4 = test_real_data(natural_long_verb, f'result/{args.model}/ldb_name.tsv')
     print('real data: animacy effect, long-distance binding')
-    c5, all5 = test_real_data(natural_long_anim, f'result/{args.model}/ldb_anim.tsv')
+    c5, all5 = test_real_data(natural_long_anim, f'result/{args.model}/ldb_anim.tsv', task='animacy')
 
     real_c = c1+c2+c3+c4+c5
     real_all = all1+all2+all3+all4+all5
@@ -202,30 +159,30 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  female_first=False)
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  female_first=True)
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f', antecedent_list=['f', 'm'])
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  antecedent='m', antecedent_list=['f', 'm'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', female_first=True)
-    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', female_first=False)
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
     print('In externally oriented verb setting, the percentage of local binding:')
-    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', female_first=True)
-    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', female_first=False)
+    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
+    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
     print('In internally oriented verb setting, the percentage of local binding:')
-    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', female_first=True)
-    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', female_first=False)
+    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
+    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
     print('In the blocking effect setting, the percentage of local binding:')
-    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv',  blocking=True)
+    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv',  antecedent='w', antecedent_list=['f', 'm', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
-    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', animacy=True)
+    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', antecedent='t', antecedent_list=['f', 'm', 't'])
     print('In subject orientation, the percentage of local binding:')
-    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv',  female_first=False)
-    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv',  female_first=True)
+    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv',  antecedent='f', antecedent_list=['f', 'm'])
+    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv',  antecedent='m', antecedent_list=['f', 'm'])
     print('In subject orientation in a gender-biased setting, the percentage of local binding:')
-    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv',  female_first=False)
-    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv',  female_first=True)
+    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv',  antecedent='f', antecedent_list=['f', 'm'])
+    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv',  antecedent='m', antecedent_list=['f', 'm'])
 
     print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
-    syn_c = c6+c7+c8+c9+all10-c10+all11-c11+c12+c13+c14+c15+c16+c17+c18+c19
+    syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17+c18+c19
     syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17+all18+all19
     print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
     print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
