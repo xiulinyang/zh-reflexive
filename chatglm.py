@@ -35,14 +35,17 @@ natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().st
 natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, antecedent = None, antecedent_list = None, verbose=False):
+def get_probability(zh_sents, output, pron=True,antecedent = None, antecedent_list = None, verbose=False):
 # Get logits from the model
     c=0
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
     with open(output, 'w', encoding="utf-8") as out_tsv:
         for sent in zh_sents:
             ziji_index = sent.index('自')
-            sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
+            if pron:
+                sent = f'{sent[:ziji_index-1]}{sent[ziji_index:-1]}'
+            else:
+                sent = f'{sent[:ziji_index]}{sent[ziji_index:-1]}'
             sent = f'在“{sent}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
 
@@ -159,27 +162,27 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f', antecedent_list=['f', 'm'])
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  antecedent='m', antecedent_list=['f', 'm'])
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f', pron=False,antecedent_list=['f', 'm'])
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  antecedent='m',pron=False, antecedent_list=['f', 'm'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
-    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='f',pron=False, antecedent_list=['f', 'm'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='m', pron=False,antecedent_list=['f', 'm'])
     print('In externally oriented verb setting, the percentage of local binding:')
-    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
-    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
+    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f',pron=False, antecedent_list=['f', 'm'])
+    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', pron=False,antecedent_list=['f', 'm'])
     print('In internally oriented verb setting, the percentage of local binding:')
-    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
-    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', antecedent_list=['f', 'm'])
+    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', pron=False, antecedent='f', antecedent_list=['f', 'm'])
+    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', pron=False, antecedent='m', antecedent_list=['f', 'm'])
     print('In the blocking effect setting, the percentage of local binding:')
-    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv',  antecedent='w', antecedent_list=['f', 'm', 'w'])
+    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', pron=False, antecedent='w', antecedent_list=['f', 'm', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
-    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', antecedent='t', antecedent_list=['f', 'm', 't'])
+    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', pron=False,antecedent='t', antecedent_list=['f', 'm', 't'])
     print('In subject orientation, the percentage of local binding:')
-    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv',  antecedent='f', antecedent_list=['f', 'm'])
-    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv',  antecedent='m', antecedent_list=['f', 'm'])
+    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv',  antecedent='f',pron=False, antecedent_list=['f', 'm'])
+    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv',  antecedent='m', pron=False,antecedent_list=['f', 'm'])
     print('In subject orientation in a gender-biased setting, the percentage of local binding:')
-    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv',  antecedent='f', antecedent_list=['f', 'm'])
-    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv',  antecedent='m', antecedent_list=['f', 'm'])
+    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', pron=False, antecedent='f', antecedent_list=['f', 'm'])
+    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', pron=False, antecedent='m', antecedent_list=['f', 'm'])
 
     print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
     syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17+c18+c19
