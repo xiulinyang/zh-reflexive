@@ -102,7 +102,7 @@ def test_real_data(zh_sents, output, task = None, verbose=False):
             if task =='animacy':
                 to_add_antecedent = ['她','他','它']
             elif task == 'blocking':
-                to_add_antecedent = ['她','他','我']
+                to_add_antecedent = ['她','他','我','你']
             else:
                 to_add_antecedent = ['她', '他']
             antecedent_list = list(set([x for x, y in target2label.items() if freq_char[x] > 0 or x in to_add_antecedent]))
@@ -143,6 +143,7 @@ if __name__ == '__main__':
         pass
 
     natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
+    natural_blocking = Path('data/real_data_blocking.txt').read_text().strip().split('\n')
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
     c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
@@ -156,8 +157,11 @@ if __name__ == '__main__':
     print('real data: animacy effect, long-distance binding')
     c5, all5 = test_real_data(natural_long_anim, f'result/{args.model}/ldb_anim.tsv', task='animacy')
 
-    real_c = c1+c2+c3+c4+c5
-    real_all = all1+all2+all3+all4+all5
+    print('real data: animacy effect, long-distance binding')
+    c20, all20 = test_real_data(natural_blocking, f'result/{args.model}/natural_blocking.tsv', task='blocking')
+
+    real_c = c1 + c2 + c3 + c4 + c5 + c20
+    real_all = all1 + all2 + all3 + all4 + all5 + all20
     print('++++++++++++++++++++++++OVERALL+++++++++++++++++++++++++++++++++++++++++')
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
