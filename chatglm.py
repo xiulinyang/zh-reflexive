@@ -9,8 +9,8 @@ from collections import Counter
 
 
 # Initialize tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
+tokenizer = AutoTokenizer.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True).half().cuda()
 model.eval()
 
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
@@ -103,7 +103,9 @@ def test_real_data(zh_sents, output, task = None, verbose=False):
             else:
                 to_add_antecedent = ['她', '他']
             antecedent_list = list(set([x for x, y in target2label.items() if freq_char[x] > 0 or x in to_add_antecedent]))
-            target_dic = {x: y for x, y in target2label.items() if y in antecedent_list}
+            
+            target_dic = {x: y for x, y in target2label.items() if x in antecedent_list}
+            
             label2target = {y:x for x, y in target_dic.items()}
             next_word_ids = {x: tokenizer.encode(x, add_special_tokens=False)[0] for x, y in target_dic.items()}
             softmax_probs = F.softmax(logits, dim=-1)
@@ -115,8 +117,6 @@ def test_real_data(zh_sents, output, task = None, verbose=False):
             out_tsv.write(f'{sent}\t{prob_to_write}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
 
-            print(sent)
-            print(all_prob)
             if label2target[all_prob[0][0]] == sentence[1]:
                 c+=1
             else:
