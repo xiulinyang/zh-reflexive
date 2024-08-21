@@ -144,6 +144,7 @@ if __name__ == '__main__':
 
     natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
     natural_blocking = Path('data/real_data_blocking.txt').read_text().strip().split('\n')
+
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
     c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', antecedent='f', antecedent_list=['f', 'm'])
@@ -157,7 +158,7 @@ if __name__ == '__main__':
     print('real data: animacy effect, long-distance binding')
     c5, all5 = test_real_data(natural_long_anim, f'result/{args.model}/ldb_anim.tsv', task='animacy')
 
-    print('real data: animacy effect, long-distance binding')
+    print('real data: blocking effect, long-distance binding')
     c20, all20 = test_real_data(natural_blocking, f'result/{args.model}/natural_blocking.tsv', task='blocking')
 
     real_c = c1 + c2 + c3 + c4 + c5 + c20

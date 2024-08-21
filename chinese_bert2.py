@@ -156,7 +156,7 @@ if __name__ == '__main__':
         model = 'xlm-roberta-large'
     else:
         raise ValueError('invalid model name!')
-    natural_blocking = Path('data/real_data_blocking.txt').read_text().strip().split('\n')
+
 
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
@@ -171,8 +171,8 @@ if __name__ == '__main__':
     print('real data: animacy effect, long-distance binding')
     c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv', task = 'animacy')
 
-    print('real data: animacy effect, long-distance binding')
-    c20, all20 = test_real_data(natural_blocking, f'result/{args.model}/natural_blocking.tsv', task='blocking')
+    print('real data: blocking effect, long-distance binding')
+    c20, all20 = test_real_data('data/real_data_blocking.txt', f'result/{args.model}/natural_blocking.tsv', task='blocking')
 
 
     real_c = c1+c2+c3+c4+c5+c20
