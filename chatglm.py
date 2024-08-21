@@ -175,9 +175,12 @@ if __name__ == '__main__':
     print('In externally oriented verb setting, the percentage of local binding:')
     c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f',pron=False, antecedent_list=['f', 'm'])
     c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', pron=False,antecedent_list=['f', 'm'])
+    print((c10+c11)/(all10+all11))
+
     print('In internally oriented verb setting, the percentage of local binding:')
     c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', pron=False, antecedent='f', antecedent_list=['f', 'm'])
     c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', pron=False, antecedent='m', antecedent_list=['f', 'm'])
+    print((c12+c13)/(all12+all13))
     print('In the blocking effect setting, the percentage of local binding:')
     c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', pron=False, antecedent='w', antecedent_list=['f', 'm', 'w'])
     print('In animate setting, the percentage of long-distance binding:')

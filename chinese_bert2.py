@@ -189,9 +189,11 @@ if __name__ == '__main__':
     print('In externally oriented verb setting, the percentage of local binding:')
     c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
     c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    print((c10 + c11) / (all10 + all11))
     print('In internally oriented verb setting, the percentage of local binding:')
     c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
     c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    print((c12 + c13) / (all12 + all13))
     print('In the blocking effect setting, the percentage of local binding:')
     c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax', antecedent='w', possible_antecedent=['f','m', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
@@ -208,3 +210,6 @@ if __name__ == '__main__':
     syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17+all18+all19
     print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
     print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
+    # with open(f'result-{args.model}.txt', 'w') as final_result:
+    #     result_
+    #     final_result.write()
