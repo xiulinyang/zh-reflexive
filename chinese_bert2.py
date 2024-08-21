@@ -42,10 +42,10 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('prompt\the\ther\tme\tit\n')
+        out_tsv.write('prompt\the\ther\tme\tit\tyou\n')
         c = 0
-        target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
-        target = ['他', '她', '我', '它']
+        target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', 'n':'你'}
+        target = ['他', '她', '我', '它','你']
         for s in tqdm(zh_sents):
 
             if task == 'syntax':
@@ -68,6 +68,7 @@ def get_probability(zh_sents, output, task=None, female_first=True, blocking=Fal
             f = all_prob['f']
             w = all_prob['w']
             t = all_prob['t']
+            n = all_prob['n']
             out_tsv.write(f'{text}\t{m}\t{f}\t{w}\t{t}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
             if verbose:
@@ -96,8 +97,8 @@ def test_real_data(input_file, output_file, verbose=False):
     with open(output_file, 'w', encoding='utf-8') as out_tsv:
         out_tsv.write('prompt\the\ther\tme\tit\n')
         c = 0
-        target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't'}
-        label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
+        target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', 'n':'你'}
+        label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它', '你':'n'}
         target = ['他', '她', '我', '它']
         for s in tqdm(input_sents):
             text = f'如果{s[0][:-1]}，那么{s[2][:-2]}{mask}。'
@@ -136,6 +137,8 @@ if __name__ == '__main__':
         model = 'xlm-roberta-base'
     elif args.model == 'mbert':
        model = 'google-bert/bert-base-multilingual-cased'
+    elif args.model == 'xlm-large':
+        model = 'xlm-roberta-large'
     else:
         raise ValueError('invalid model name!')
 

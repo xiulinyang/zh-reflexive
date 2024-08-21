@@ -39,8 +39,9 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
     m = []
     w = []
     t = []
+    n = []
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+        out_tsv.write('he\ther\tme\tit\tyou\n')
         for sent in zh_sents:
             ziji_index = sent.index('自')
             sent = f'{sent[:ziji_index - 1]}{sent[ziji_index:-1]}'
@@ -56,12 +57,13 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
             next_word_f = '她'
             next_word_w = '我'
             next_word_t = '它'
+            next_word_n = '你'
 
             next_word_id_m = tokenizer.encode(next_word_m, add_special_tokens=False)[0]
             next_word_id_f = tokenizer.encode(next_word_f, add_special_tokens=False)[0]
             next_word_id_w = tokenizer.encode(next_word_w, add_special_tokens=False)[0]
             next_word_id_t = tokenizer.encode(next_word_t, add_special_tokens=False)[0]
-
+            next_word_id_n = tokenizer.encode(next_word_n, add_special_tokens=False)[0]
 
             softmax_probs = F.softmax(logits, dim=-1)
 
@@ -70,17 +72,19 @@ def get_probability(zh_sents, output, blocking = False, female_first=False, anim
             next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
             next_word_probability_w = softmax_probs[0, -1, next_word_id_w].item()
             next_word_probability_t = softmax_probs[0, -1, next_word_id_t].item()
+            next_word_probability_n = softmax_probs[0, -1, next_word_id_n].item()
 
             f.append(next_word_probability_her)
             m.append(next_word_probability_him)
             w.append(next_word_probability_w)
             t.append(next_word_probability_t)
+            n.append(next_word_probability_n)
 
             all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
-                        'w': next_word_probability_w, 't': next_word_probability_t}
+                        'w': next_word_probability_w, 't': next_word_probability_t, 'n':next_word_probability_n}
 
 
-            out_tsv.write(f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
+            out_tsv.write(f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\t{next_word_probability_n}\n')
             all_prob = sorted(all_prob.items(), key= lambda x:x[1], reverse=True)
             print(sent)
             print(all_prob)
@@ -110,9 +114,9 @@ def test_real_data(zh_sents, output, verbose=False):
     w = []
     t = []
     zh_sents = [x.split() for x in zh_sents]
-    label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它'}
+    label2target = {'f': '她', 'm': '他', 'w': '我', 't': '它','n':'你'}
     with open(output, 'w') as out_tsv:
-        out_tsv.write('he\ther\tme\tit\n')
+        out_tsv.write('he\ther\tme\tit\tyou\n')
         for sentence in zh_sents:
             sent = f'在“{sentence[0]}”这句话中，自己指的是'
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
@@ -126,11 +130,13 @@ def test_real_data(zh_sents, output, verbose=False):
             next_word_f = '她'
             next_word_w = '我'
             next_word_t = '它'
+            next_word_n = '你'
 
             next_word_id_m = tokenizer.encode(next_word_m, add_special_tokens=False)[0]
             next_word_id_f = tokenizer.encode(next_word_f, add_special_tokens=False)[0]
             next_word_id_w = tokenizer.encode(next_word_w, add_special_tokens=False)[0]
             next_word_id_t = tokenizer.encode(next_word_t, add_special_tokens=False)[0]
+            next_word_id_n = tokenizer.encode(next_word_n, add_special_tokens=False)[0]
 
             softmax_probs = F.softmax(logits, dim=-1)
 
@@ -138,17 +144,19 @@ def test_real_data(zh_sents, output, verbose=False):
             next_word_probability_her = softmax_probs[0, -1, next_word_id_f].item()
             next_word_probability_w = softmax_probs[0, -1, next_word_id_w].item()
             next_word_probability_t = softmax_probs[0, -1, next_word_id_t].item()
+            next_word_probability_n = softmax_probs[0, -1, next_word_id_n].item()
 
             f.append(next_word_probability_her)
             m.append(next_word_probability_him)
             w.append(next_word_probability_w)
             t.append(next_word_probability_t)
+            n.append(next_word_probability_n)
 
             all_prob = {'f': next_word_probability_her, 'm': next_word_probability_him,
-                        'w': next_word_probability_w, 't': next_word_probability_t}
+                        'w': next_word_probability_w, 't': next_word_probability_t, 'n': next_word_probability_n}
 
             out_tsv.write(
-                f'{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\n')
+                f'{sent}\t{next_word_probability_him}\t{next_word_probability_her}\t{next_word_probability_w}\t{next_word_probability_t}\t{next_word_probability_n}\n')
             all_prob = sorted(all_prob.items(), key=lambda x: x[1], reverse=True)
             print(sent)
             print(all_prob)
