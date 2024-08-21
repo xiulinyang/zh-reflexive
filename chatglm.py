@@ -9,8 +9,8 @@ from collections import Counter
 
 
 # Initialize tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True).half().cuda()
+tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).half().cuda()
 model.eval()
 
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
