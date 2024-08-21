@@ -35,7 +35,7 @@ natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().st
 natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, task, antecedent = None, antecedent_list = None, verbose=False):
+def get_probability(zh_sents, output, antecedent = None, antecedent_list = None, verbose=False):
 # Get logits from the model
     c=0
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
