@@ -154,6 +154,8 @@ if __name__ == '__main__':
        model = 'google-bert/bert-base-multilingual-cased'
     elif args.model == 'xlm-large':
         model = 'xlm-roberta-large'
+    elif args.model == 'roberta':
+        model = 'hfl/chinese-roberta-wwm-ext-large'
     else:
         raise ValueError('invalid model name!')
 

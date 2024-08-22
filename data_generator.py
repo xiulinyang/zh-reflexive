@@ -19,7 +19,7 @@ first_person = '我'
 second_person = '你'
 inanimate_pronoun = '它'
 inanimate_nouns = ['这本书','这封信','这个举动','这个结果','这个问题','这句话','这个事件']
-inanimate_nouns_no_def = ['书','信','结果','问题','话','成绩','钱','经验','生日','计划','意见','想法']
+inanimate_nouns_no_def = ['书','信','结果','问题','话','成绩','经验', '照片', '计划','意见','想法']
 ditransitive_verbs = ['给','送给','告诉','通知','寄给','提供','拒绝回答','提醒','推荐']
 ditransitive_verbs_bias = ['推荐','描述','介绍','看','展示']
 male_only = ['丈夫', '胳膊', '头发', '身体',  '美貌', '裙子', '胸脯', '面颊', '笑容', '身材', '肉体', '容貌', '处境', '脸庞', '笑声', '举止', '形象', '脸蛋', '愿望', '照片', '关系', '姐姐', '爱人',  '欢心', '前额']
@@ -81,12 +81,12 @@ def subject_orientation(inanimate_noun_no_def, ditransitive_verb, output_file, f
         for v in ditransitive_verb:
             for n in inanimate_noun_no_def:
                 if female_first:
-                    sent = '她给他'+v+'自己的'+n
+                    sent = '她'+v+'他的'+n+'是关于自己的。'
                     out.write(f'{sent}\n')
                     # sent = '她' + v + '我自己的' + n
                     # out.write(f'{sent}\n')
                 else:
-                    sent = '他给她'+v+'自己的'+n
+                    sent = '他'+ v +'她的'+n+'是关于自己的。'
                     out.write(f'{sent}\n')
                     # sent = '他' + v + '我自己的' + n
                     # out.write(f'{sent}\n')
@@ -96,12 +96,12 @@ def subj_gender(inanimate_noun_no_def, ditransitive_verb, output_file, female_fi
         for v in ditransitive_verb:
             for n in inanimate_noun_no_def:
                 if female_first:
-                    sent = '她'+v+'他关于自己的'+n
+                    sent = '她'+v+'他的'+n+'是关于自己的。'
                     out.write(f'{sent}\n')
                     # sent = '她' + v + '我自己的' + n
                     # out.write(f'{sent}\n')
                 else:
-                    sent = '他' + v + '她关于自己的' + n
+                    sent = '他'+ v +'她的'+n+'是关于自己的。'
                     out.write(f'{sent}\n')
                     # sent = '他' + v + '我自己的' + n
                     # out.write(f'{sent}\n')
@@ -122,12 +122,12 @@ if __name__=='__main__':
     # create_verb_pairs(out_verb, output_file='data/verb_m1.txt', female_first=False)
     # blocking_effect_generator(amb_verbs, output_file='data/blocking_amb.txt')
     # blocking_effect_generator(out_verb, output_file='data/blocking_verbs.txt')
-    create_verb_pairs(in_verb, output_file='data/in_verb_f1.txt')
-    create_verb_pairs(in_verb, output_file='data/in_verb_m1.txt', female_first=False)
+    # create_verb_pairs(in_verb, output_file='data/in_verb_f1.txt')
+    # create_verb_pairs(in_verb, output_file='data/in_verb_m1.txt', female_first=False)
     # animacy_effect(inanimate_nouns, inanimate_verbs, output_file='data/inanimate_nouns.txt')
     # animacy_effect(inanimate_pronoun, inanimate_verbs, output_file='data/inanimate_pron.txt')
-    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
-    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
+    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
+    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
     subject_orientation(female_only, ditransitive_verbs_bias, output_file='data/subject_orientation_f1_bias.txt')
     subject_orientation(male_only, ditransitive_verbs_bias, output_file='data/subject_orientation_m1_bias.txt', female_first=False)
 
