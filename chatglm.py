@@ -9,8 +9,8 @@ from collections import Counter
 
 
 # Initialize tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b-base", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm3-6b-base", trust_remote_code=True).half().cuda()
+tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).half().cuda()
 model.eval()
 
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
@@ -167,11 +167,11 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='m', pron=False,antecedent_list=['f', 'm'])
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  antecedent='f',pron=False, antecedent_list=['f', 'm'])
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f', pron=False,antecedent_list=['f', 'm'])
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv',  antecedent='m',pron=False, antecedent_list=['f', 'm'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='f',pron=False, antecedent_list=['f', 'm'])
-    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='m', pron=False,antecedent_list=['f', 'm'])
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m',pron=False, antecedent_list=['f', 'm'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', pron=False,antecedent_list=['f', 'm'])
     print('In externally oriented verb setting, the percentage of local binding:')
     c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f',pron=False, antecedent_list=['f', 'm'])
     c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', pron=False,antecedent_list=['f', 'm'])
