@@ -160,58 +160,58 @@ if __name__ == '__main__':
         raise ValueError('invalid model name!')
 
 
-    # print('========================REAL DATA==========================================')
-    # print('real data: local binding, female binder')
-    # c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', possible_antecedent=['f','m'])
-    # print('real data: local binding, male binder')
-    # c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', possible_antecedent=['f','m'])
-    #
-    # print('real data: reflexive verb, local binding')
-    # c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
-    # print('real data: non-reflexive verb, long-distance binding')
-    # c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
-    # print('real data: animacy effect, long-distance binding')
-    # c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv', task = 'animacy')
-    #
-    # print('real data: blocking effect, long-distance binding')
-    # c20, all20 = test_real_data('data/real_data_blocking.txt', f'result/{args.model}/natural_blocking.tsv', task='blocking')
-    #
-    #
-    # real_c = c1+c2+c3+c4+c5+c20
-    # real_all = all1+all2+all3+all4+all5+all20
-    # print('++++++++++++++++++++++++OVERALL+++++++++++++++++++++++++++++++++++++++++')
-    # print(f'{real_c}\t{real_all}\t{real_c/real_all}')
-    # print('========================SYNTHETIC DATA======================================')
-    # print('In the local binding setting, the percentage of local binding is: ')
-    # c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', possible_antecedent=['f','m'])
-    # c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', antecedent='m', possible_antecedent=['f','m'])
-    # print('In ambiguous setting, the percentage of local binding:')
-    # c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m', possible_antecedent=['f','m'])
-    # c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', possible_antecedent=['f','m'])
-    # print('In externally oriented verb setting, the percentage of local binding:')
-    # c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
-    # c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
-    # print((c10 + c11) / (all10 + all11))
-    # print('In internally oriented verb setting, the percentage of local binding:')
-    # c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
-    # c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
-    # print((c12 + c13) / (all12 + all13))
-    # print('In the blocking effect setting, the percentage of local binding:')
-    # c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax', antecedent='w', possible_antecedent=['f','m', 'w'])
-    # print('In animate setting, the percentage of long-distance binding:')
-    # c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', antecedent='t', possible_antecedent=['f','m', 't'])
-    # print('In subject orientation, the percentage of local binding:')
+    print('========================REAL DATA==========================================')
+    print('real data: local binding, female binder')
+    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', possible_antecedent=['f','m'])
+    print('real data: local binding, male binder')
+    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', possible_antecedent=['f','m'])
+
+    print('real data: reflexive verb, local binding')
+    c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
+    print('real data: non-reflexive verb, long-distance binding')
+    c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
+    print('real data: animacy effect, long-distance binding')
+    c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv', task = 'animacy')
+
+    print('real data: blocking effect, long-distance binding')
+    c20, all20 = test_real_data('data/real_data_blocking.txt', f'result/{args.model}/natural_blocking.tsv', task='blocking')
+
+
+    real_c = c1+c2+c3+c4+c5+c20
+    real_all = all1+all2+all3+all4+all5+all20
+    print('++++++++++++++++++++++++OVERALL+++++++++++++++++++++++++++++++++++++++++')
+    print(f'{real_c}\t{real_all}\t{real_c/real_all}')
+    print('========================SYNTHETIC DATA======================================')
+    print('In the local binding setting, the percentage of local binding is: ')
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', possible_antecedent=['f','m'])
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', antecedent='m', possible_antecedent=['f','m'])
+    print('In ambiguous setting, the percentage of local binding:')
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', possible_antecedent=['f','m'])
+    print('In externally oriented verb setting, the percentage of local binding:')
+    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
+    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    print((c10 + c11) / (all10 + all11))
+    print('In internally oriented verb setting, the percentage of local binding:')
+    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
+    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    print((c12 + c13) / (all12 + all13))
+    print('In the blocking effect setting, the percentage of local binding:')
+    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax2', antecedent='w', possible_antecedent=['f','m', 'w'])
+    print('In animate setting, the percentage of long-distance binding:')
+    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', antecedent='t', possible_antecedent=['f','m', 't'])
+    print('In subject orientation, the percentage of local binding:')
     c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
     c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
-    print('In subject orientation in a gender-biased setting, the percentage of local binding:')
-    c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
-    c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
+    # print('In subject orientation in a gender-biased setting, the percentage of local binding:')
+    # c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
+    # c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
 
     # print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
-    # syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17+c18+c19
-    # syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17+all18+all19
-    # print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
-    # print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
-    # # with open(f'result-{args.model}.txt', 'w') as final_result:
-    # #     result_
-    # #     final_result.write()
+    syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17
+    syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17
+    print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
+    print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
+    # with open(f'result-{args.model}.txt', 'w') as final_result:
+    #     result_
+    #     final_result.write()
