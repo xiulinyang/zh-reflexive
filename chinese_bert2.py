@@ -50,7 +50,6 @@ def get_probability(zh_sents, output, task=None, local=True, antecedent=None, po
         target_dic = {key:value for key, value in target_dic.items() if value in possible_antecedent}
         target = [key for key, _ in target_dic.items()]
         for s in tqdm(zh_sents):
-
             if task == 'syntax':
                 ziji_index = s.index('自')
                 text = f'{s[:ziji_index-1]}{mask}{s[ziji_index:]}'
@@ -60,10 +59,7 @@ def get_probability(zh_sents, output, task=None, local=True, antecedent=None, po
             elif task == 'subject_orientation':
                 de_id = s.index('的')
                 end_id = s.index('是')
-                if local:
-                    text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}自己的。'
-                else:
-                    text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
+                text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
             else:
                 if local:
                     text = f'如果{s[:-1]},那么{s[2:-3]}{mask}自己。'
