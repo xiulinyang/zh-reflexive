@@ -48,7 +48,9 @@ def get_prediction(zh_sents, pred_name, model = None,female_first=False, block_f
 
     with open(pred_name, 'w') as trans:
         for j, src in enumerate(srcs):
-            print(src, detokenised_prds[j])
+            if model =='mbart':
+                
+
             trans.write(f'{src}\t{detokenised_prds[j]}\n')
             if block_first:
                 if 'my' in detokenised_prds[j]:

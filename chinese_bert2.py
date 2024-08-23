@@ -40,14 +40,14 @@ natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().spli
 
 
 # Tokenize input
-def get_probability(zh_sents, output, task=None, local=True, antecedent=None, possible_antecedent =None, verbose=False):
+def get_probability(zh_sents, output, task=None, local=True, antecedent=None, antecedent_list =None, verbose=False):
     # Get logits from the model
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
     with open(output, 'w', encoding="utf-8") as out_tsv:
         c = 0
-        target_dic = {key:value for key, value in target_dic.items() if value in possible_antecedent}
+        target_dic = {key:value for key, value in target_dic.items() if value in antecedent_list}
         target = [key for key, _ in target_dic.items()]
         for s in tqdm(zh_sents):
             if task == 'syntax':
@@ -164,9 +164,9 @@ if __name__ == '__main__':
 
     print('========================REAL DATA==========================================')
     print('real data: local binding, female binder')
-    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', possible_antecedent=['f','m'])
+    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', antecedent_list=['f','m'])
     print('real data: local binding, male binder')
-    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', possible_antecedent=['f','m'])
+    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', antecedent_list=['f','m'])
 
     print('real data: reflexive verb, local binding')
     c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
@@ -185,29 +185,29 @@ if __name__ == '__main__':
     print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', possible_antecedent=['f','m'])
-    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', antecedent='m', possible_antecedent=['f','m'])
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', antecedent_list=['f','m'])
+    c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', antecedent='m', antecedent_list=['f','m'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m', possible_antecedent=['f','m'])
-    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', possible_antecedent=['f','m'])
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m', antecedent_list=['f','m'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', antecedent_list=['f','m'])
     print('In externally oriented verb setting, the percentage of local binding:')
-    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', local=False, antecedent='f', possible_antecedent=['f','m'])
-    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', local=False,  antecedent='m', possible_antecedent=['f','m'])
+    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', local=False, antecedent='f', antecedent_list=['f','m'])
+    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', local=False,  antecedent='m', antecedent_list=['f','m'])
     print((c10 + c11) / (all10 + all11))
     print('In internally oriented verb setting, the percentage of local binding:')
-    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
-    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', antecedent_list=['f','m'])
+    c13, all13 =get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', antecedent='m', antecedent_list=['f','m'])
     print((c12 + c13) / (all12 + all13))
     print('In the blocking effect setting, the percentage of local binding:')
-    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax2', antecedent='w', possible_antecedent=['f','m', 'w'])
+    c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax2', antecedent='w', antecedent_list=['f','m', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
-    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', local= False, antecedent='t', possible_antecedent=['f','m', 't'])
+    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', local= False, antecedent='t', antecedent_list=['f','m', 't'])
     print('In subject orientation, the percentage of local binding:')
-    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
-    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
+    c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', antecedent='f', antecedent_list=['f','m'])
+    c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', antecedent='m', antecedent_list=['f','m'])
     # print('In subject orientation in a gender-biased setting, the percentage of local binding:')
-    # c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
-    # c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
+    # c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', antecedent='f', antecedent_list=['f','m'])
+    # c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', antecedent='m', antecedent_list=['f','m'])
 
     # print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
     syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17
