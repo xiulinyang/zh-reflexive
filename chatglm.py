@@ -38,13 +38,11 @@ def get_probability(zh_sents, output, task=None, local=True,antecedent = None, a
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
     with open(output, 'w', encoding="utf-8") as out_tsv:
         for sent in zh_sents:
-            if task == 'syntax':
+            if '他自己' in sent or '她自己' in sent:
                 ziji_index = sent.index('自')
-                sent = f'{sent[:ziji_index-1]}'
-            elif task == 'syntax2':
-                ziji_index = sent.index('自')
-                sent = f'{sent[:ziji_index]}'
-            elif task == 'subject_orientation':
+                sent = f'{sent[:ziji_index]}{sent[ziji_index:]}'
+
+            if task == 'subject_orientation':
                 de_id = sent.index('的')
                 end_id = sent.index('是')
                 sent = f'如果{sent[:-1]}， 那么{sent[de_id + 1:end_id]}是关于'
