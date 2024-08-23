@@ -32,7 +32,7 @@ natural_local_f = Path('data/filtered_sents_local_f_binding.txt').read_text().st
 natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().split('\n')
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, task, local=True,antecedent = None, antecedent_list = None, verbose=False):
+def get_probability(zh_sents, output, task=None, local=True,antecedent = None, antecedent_list = None, verbose=False):
 # Get logits from the model
     c=0
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
@@ -92,13 +92,15 @@ def get_probability(zh_sents, output, task, local=True,antecedent = None, antece
     return c, len(zh_sents)
 
 
-def test_real_data(zh_sents, output, task = None, verbose=False):
+def test_real_data(input_file, output, task = None, verbose=False):
     c = 0
-    zh_sents = [x.split() for x in zh_sents]
+    zh_sents = [x.split() for x in Path(input_file).read_text().strip().split('\n')]
     target2label = {'她':'f', '他':'m', '我':'w', '它':'t'}
     with open(output, 'w',encoding='utf-8') as out_tsv:
         for sentence in zh_sents:
+        
             sent = f'如果{sentence[0][:-1]}，那么{sentence[2][:-2]}'
+
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
             with torch.no_grad():
                 outputs = model(**encoded_input)
