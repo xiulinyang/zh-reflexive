@@ -40,7 +40,7 @@ natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().spli
 
 
 # Tokenize input
-def get_probability(zh_sents, output, task=None, antecedent=None, possible_antecedent =None, verbose=False):
+def get_probability(zh_sents, output, task=None, local=True, antecedent=None, possible_antecedent =None, verbose=False):
     # Get logits from the model
     nlp = pipeline("fill-mask", model=model)
     mask = nlp.tokenizer.mask_token
@@ -60,9 +60,15 @@ def get_probability(zh_sents, output, task=None, antecedent=None, possible_antec
             elif task == 'subject_orientation':
                 de_id = s.index('的')
                 end_id = s.index('是')
-                text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
+                if local:
+                    text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}自己的。'
+                else:
+                    text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
             else:
-                text = f'如果{s[:-1]},那么{s[2:-3]}{mask}。'
+                if local:
+                    text = f'如果{s[:-1]},那么{s[2:-3]}{mask}自己。'
+                else:
+                    text = f'如果{s[:-1]},那么{s[2:-3]}{mask}。'
                 # text = f'如果{s[:-1]},那么{mask}{s[-5:]}'
             predictions = nlp(text, targets=target)
             scores = softmax([x['score'] for x in predictions])
@@ -189,8 +195,8 @@ if __name__ == '__main__':
     c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='m', possible_antecedent=['f','m'])
     c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='f', possible_antecedent=['f','m'])
     print('In externally oriented verb setting, the percentage of local binding:')
-    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
-    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', antecedent='m', possible_antecedent=['f','m'])
+    c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', local=False, antecedent='f', possible_antecedent=['f','m'])
+    c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', local=False,  antecedent='m', possible_antecedent=['f','m'])
     print((c10 + c11) / (all10 + all11))
     print('In internally oriented verb setting, the percentage of local binding:')
     c12, all12 =get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', antecedent='f', possible_antecedent=['f','m'])
@@ -199,7 +205,7 @@ if __name__ == '__main__':
     print('In the blocking effect setting, the percentage of local binding:')
     c14, all14 =get_probability(blocking, f'result/{args.model}/blocking.tsv', 'syntax2', antecedent='w', possible_antecedent=['f','m', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
-    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', antecedent='t', possible_antecedent=['f','m', 't'])
+    c15, all15 =get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', local= False, antecedent='t', possible_antecedent=['f','m', 't'])
     print('In subject orientation, the percentage of local binding:')
     c16, all16 =get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', antecedent='f', possible_antecedent=['f','m'])
     c17, all17 =get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', antecedent='m', possible_antecedent=['f','m'])
@@ -212,6 +218,8 @@ if __name__ == '__main__':
     syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17
     print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
     print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
-    # with open(f'result-{args.model}.txt', 'w') as final_result:
-    #     result_
-    #     final_result.write()
+
+    print(
+        f'{round((c1 / all1) * 100, 1)}&{round((c2 / all2) * 100, 1)}&{round((c4 / all4) * 100, 1)}&{round((c3 / all3) * 100, 1)}&{round((c20 / all20), 1)}&{round((c5 / all5) * 100, 1)}&{round((real_c / real_all) * 100, 1)}')
+    print(
+        f'{round((c6 / all6) * 100, 1)}&{round((c7 / all7) * 100, 1)}&{round((c8 / all8) * 100, 1)}&{round((c9 / all9) * 100, 1)}&{round(((c10 + c11) / (all10 + all11)) * 100, 1)}&{round(((c12 + c13) / (all12 + all13)) * 100, 1)}&{round((c14 / all14) * 100, 1)}&{round((c15 / all15) * 100, 1)}&{round((c16 / all16) * 100, 1)}&{round((c17 / all17) * 100, 1)}&{round((syn_c / syn_all) * 100, 1)}')

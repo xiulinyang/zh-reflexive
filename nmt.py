@@ -1,9 +1,8 @@
 from transformers import MarianTokenizer, MarianMTModel
 from pathlib import Path
-
-
-tokenizer = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
-model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
+import argparse
+import os
+from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 
 local_f1 = Path('data/local_female.txt').read_text().strip().split('\n')
 local_m1 = Path('data/local_male.txt').read_text().strip().split('\n')
@@ -32,7 +31,9 @@ natural_block = Path('data/real_data_blocking.txt').read_text().strip().split('\
 ldb = Path('data/real_data_ldb.txt').read_text().strip().split('\n')
 lb = Path('data/real_data_lb.txt').read_text().strip().split('\n')
 
-def get_prediction(zh_sents, pred_name, female_first=False, block_first=False, animacy=False, verbose=False):
+
+
+def get_prediction(zh_sents, pred_name, model = None,female_first=False, block_first=False, animacy=False, verbose=False):
     srcs = [x.split()[0] for x in zh_sents]
     c =0
     batch = tokenizer.prepare_seq2seq_batch(src_texts=srcs, return_tensors="pt")
@@ -71,36 +72,50 @@ def get_prediction(zh_sents, pred_name, female_first=False, block_first=False, a
 
 
 if __name__ == '__main__':
-    # print('In local binding setting, the percentage of local binding:')
-    # get_prediction(natural_local_f, 'result/nmt/natural_local_f1.txt',female_first=False)
-    # get_prediction(natural_local_m, 'result/nmt/natural_local_m1.txt',female_first=True)
-    #
-    # get_prediction(natural_local_verb, 'result/nmt/natural_local_verb.txt', female_first=True)
-    # get_prediction(natural_long_verb, 'result/nmt/natural_long_verb.txt', female_first=True)
-    # get_prediction(natural_long_anim, 'result/nmt/natural_long_anim.txt', female_first=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', '--model', type=str, help='the evaluated model', required=True)
+    args = parser.parse_args()
+    try:
+        os.mkdir(f'result/{args.model}')
+    except:
+        pass
+    if args.model == 'nmt':
+        tokenizer = MarianTokenizer.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
+        model = MarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
+    elif args.model == 'mbart':
+        model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+        tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+
+    print('In local binding setting, the percentage of local binding:')
+    get_prediction(natural_local_f, 'result/nmt/natural_local_f1.txt',female_first=False)
+    get_prediction(natural_local_m, 'result/nmt/natural_local_m1.txt',female_first=True)
+
+    get_prediction(natural_local_verb, 'result/nmt/natural_local_verb.txt', female_first=True)
+    get_prediction(natural_long_verb, 'result/nmt/natural_long_verb.txt', female_first=True)
+    get_prediction(natural_long_anim, 'result/nmt/natural_long_anim.txt', female_first=True)
     get_prediction(natural_block, 'result/nmt/natural_blocking.txt', female_first=False)
-    # print('In local binding setting, the percentage of local binding:')
-    # get_prediction(local_f1, 'result/nmt/local_f1.txt',female_first=False)
-    # get_prediction(local_m1, 'result/nmt/local_m1.txt',female_first=True)
-    # print('In ambiguous setting, the percentage of local binding:')
-    # get_prediction(amb_f1, 'result/nmt/amb_f1.txt', female_first=True)
-    # get_prediction(amb_m1, 'result/nmt/amb_m1.txt',female_first=False)
-    # print('In externally oriented verb setting, the percentage of local binding:')
-    # get_prediction(verb_f1, 'result/nmt/verb_f1.txt', female_first=True)
-    # get_prediction(verb_m1, 'result/nmt/verb_m1.txt',female_first=False)
-    # print('In internally oriendted verb setting, the percentage of local binding:')
-    # get_prediction(in_verb_f1, 'result/nmt/in_verb_f1.txt', female_first=True)
-    # get_prediction(in_verb_m1, 'result/nmt/in_verb_m1.txt',female_first=False)
-    #
-    # print('In blocking effect setting, the percentage of local binding:')
-    # get_prediction(blocking, 'result/nmt/blocking.txt', block_first=True)
-    # print('In animate (noun) setting, the percentage of local binding:')
-    # get_prediction(animacy_noun, 'result/nmt/annimacy_noun.txt', animacy=True)
-    # print('In subject orientation, the percentage of local binding:')
-    # get_prediction(subj_f1, 'result/nmt/subj_f1.txt', female_first=False)
-    # get_prediction(subj_m1,  'result/nmt/subj_m1.txt',female_first=True)
-    #
-    # print('In subject orientation, the percentage of local binding:')
-    # get_prediction(subj_f1_bias, 'result/nmt/subj_f1_bias.txt', female_first=False)
-    # get_prediction(subj_m1_bias, 'result/nmt/subj_m1_bias.txt', female_first=True)
+    print('In local binding setting, the percentage of local binding:')
+    get_prediction(local_f1, 'result/nmt/local_f1.txt',female_first=False)
+    get_prediction(local_m1, 'result/nmt/local_m1.txt',female_first=True)
+    print('In ambiguous setting, the percentage of local binding:')
+    get_prediction(amb_f1, 'result/nmt/amb_f1.txt', female_first=True)
+    get_prediction(amb_m1, 'result/nmt/amb_m1.txt',female_first=False)
+    print('In externally oriented verb setting, the percentage of local binding:')
+    get_prediction(verb_f1, 'result/nmt/verb_f1.txt', female_first=True)
+    get_prediction(verb_m1, 'result/nmt/verb_m1.txt',female_first=False)
+    print('In internally oriendted verb setting, the percentage of local binding:')
+    get_prediction(in_verb_f1, 'result/nmt/in_verb_f1.txt', female_first=True)
+    get_prediction(in_verb_m1, 'result/nmt/in_verb_m1.txt',female_first=False)
+
+    print('In blocking effect setting, the percentage of local binding:')
+    get_prediction(blocking, 'result/nmt/blocking.txt', block_first=True)
+    print('In animate (noun) setting, the percentage of local binding:')
+    get_prediction(animacy_noun, 'result/nmt/annimacy_noun.txt', animacy=True)
+    print('In subject orientation, the percentage of local binding:')
+    get_prediction(subj_f1, 'result/nmt/subj_f1.txt', female_first=False)
+    get_prediction(subj_m1,  'result/nmt/subj_m1.txt',female_first=True)
+
+    print('In subject orientation, the percentage of local binding:')
+    get_prediction(subj_f1_bias, 'result/nmt/subj_f1_bias.txt', female_first=False)
+    get_prediction(subj_m1_bias, 'result/nmt/subj_m1_bias.txt', female_first=True)
 
