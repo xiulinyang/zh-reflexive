@@ -33,24 +33,28 @@ natural_local_verb = Path('data/real_data_lb_verb.txt').read_text().strip().spli
 natural_long_verb = Path('data/real_data_ldb_verb.txt').read_text().strip().split('\n')
 natural_long_anim = Path('data/real_data_ldb_anim.txt').read_text().strip().split('\n')
 natural_blocking = Path('data/real_data_blocking.txt').read_text().strip().split('\n')
-def get_probability(zh_sents, output, task=None, local=True,antecedent = None, antecedent_list = None, verbose=False):
+def get_probability(zh_sents, output, task=None, llm=False, antecedent = None, antecedent_list = None, verbose=False):
 # Get logits from the model
     c=0
     target_dic = {'她': 'f', '他': 'm', '我': 'w', '它': 't', '你': 'n'}
     with open(output, 'w', encoding="utf-8") as out_tsv:
-        for sent in zh_sents:
-            if '他自己' in sent or '她自己' in sent:
-                ziji_index = sent.index('自')
-                sent = f'{sent[:ziji_index]}{sent[ziji_index:]}'
+        for text in zh_sents:
+            if '他自己' in text or '她自己' in text:
+                ziji_index = text.index('自')
+                text = f'{text[:ziji_index]}{text[ziji_index:]}'
 
             if task == 'subject_orientation':
-                de_id = sent.index('的')
-                end_id = sent.index('是')
-                sent = f'如果{sent[:-1]}， 那么{sent[de_id + 1:end_id]}是关于'
+                de_id = text.index('的')
+                end_id = text.index('是')
+                sent = f'如果{text[:-1]}， 那么{text[de_id + 1:end_id]}是关于'
             elif task == 'verb_orientation':
-                sent = f'如果{sent[:-1]},那么{sent[2:-3]}'
+                sent = f'如果{text[:-1]},那么{text[2:-3]}'
             else:
-                sent = f'如果{sent[:-1]},那么{sent[:-3]}'
+                sent = f'如果{text[:-1]},那么{text[:-3]}'
+
+            if llm:
+                sent = f'在“{text}”中，自己指的是'
+
             encoded_input = tokenizer(sent, return_tensors='pt').to(model.device)
 
             with torch.no_grad():
