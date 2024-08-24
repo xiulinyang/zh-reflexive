@@ -154,6 +154,14 @@ if __name__ == '__main__':
     if args.model =='gpt-distill':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
+
+    if args.model =='gpt':
+        tokenizer = BertTokenizer.from_pretrained("uer/gpt2-chinese-cluecorpussmall")
+        model = GPT2LMHeadModel.from_pretrained("uer/gpt2-chinese-cluecorpussmalll")
+
+    elif args.model =='gpt-large':
+        tokenizer = BertTokenizer.from_pretrained("uer/gpt2-large-chinese-cluecorpussmall")
+        model = GPT2LMHeadModel.from_pretrained("uer/gpt2-large-chinese-cluecorpussmall")
     elif args.model == 'gpt-medium':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-medium-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-medium-chinese-cluecorpussmall")
