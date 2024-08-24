@@ -150,7 +150,7 @@ if __name__ == '__main__':
         os.mkdir(f'result/{args.model}')
     except:
         pass
-    llm = False
+    llm = True
     if args.model =='gpt-distill':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
