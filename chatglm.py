@@ -196,8 +196,8 @@ if __name__ == '__main__':
     c7, all7 = get_probability(local_m1, f'result/{args.model}/local_m1.tsv', antecedent='m',
                                antecedent_list=['f', 'm'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 = get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', task='verb_orientation', antecedent='m', antecedent_list=['f', 'm'])
-    c9, all9 = get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', task='verb_orientation', antecedent='f', antecedent_list=['f', 'm'])
+    c8, all8 = get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', task='verb_orientation', antecedent='f', antecedent_list=['f', 'm'])
+    c9, all9 = get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', task='verb_orientation', antecedent='m', antecedent_list=['f', 'm'])
     print('In externally oriented verb setting, the percentage of local binding:')
     c10, all10 = get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', task='verb_orientation',  antecedent='f',
                                  antecedent_list=['f', 'm'])
