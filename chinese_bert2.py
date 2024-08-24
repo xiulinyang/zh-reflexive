@@ -58,7 +58,8 @@ def get_probability(zh_sents, output, task=None, local=True, antecedent=None, an
                 text = f'{s[:ziji_index]}{mask}{s[ziji_index:]}'
             elif task == 'subject_orientation':
                 de_id = s.index('的')
-                end_id = s.index('是')
+                # end_id = s.index('是')
+                end_id = len(s)-1
                 text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
             else:
                 if local:

@@ -45,7 +45,8 @@ def get_probability(zh_sents, output, task=None, llm=False, antecedent = None, a
 
             if task == 'subject_orientation':
                 de_id = text.index('的')
-                end_id = text.index('是')
+                # end_id = text.index('是')
+                end_id = len(text)-1
                 sent = f'如果{text[:-1]}， 那么{text[de_id + 1:end_id]}是关于'
             elif task == 'verb_orientation':
                 sent = f'如果{text[:-1]},那么{text[2:-3]}'
