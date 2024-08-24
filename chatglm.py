@@ -150,6 +150,7 @@ if __name__ == '__main__':
         os.mkdir(f'result/{args.model}')
     except:
         pass
+    llm = False
     if args.model =='gpt-distill':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
@@ -162,7 +163,7 @@ if __name__ == '__main__':
     elif args.model =='glm9b':
         tokenizer = AutoTokenizer.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True)
         model = AutoModel.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True).half().cuda()
-
+        llm = True
     else:
         raise ValueError('The model name is not recognized')
 
@@ -195,35 +196,35 @@ if __name__ == '__main__':
     # print(f'{real_c}\t{real_all}\t{real_c / real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
-    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f',
+    c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv',  antecedent='f', llm=llm,
                                antecedent_list=['f', 'm'])
-    c7, all7 = get_probability(local_m1, f'result/{args.model}/local_m1.tsv', antecedent='m',
+    c7, all7 = get_probability(local_m1, f'result/{args.model}/local_m1.tsv', antecedent='m', llm=llm,
                                antecedent_list=['f', 'm'])
     print('In ambiguous setting, the percentage of local binding:')
-    c8, all8 = get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', task='verb_orientation', antecedent='f', antecedent_list=['f', 'm'])
-    c9, all9 = get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', task='verb_orientation', antecedent='m', antecedent_list=['f', 'm'])
+    c8, all8 = get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', task='verb_orientation', llm=llm,antecedent='f', antecedent_list=['f', 'm'])
+    c9, all9 = get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', task='verb_orientation', llm=llm, antecedent='m', antecedent_list=['f', 'm'])
     print('In externally oriented verb setting, the percentage of local binding:')
-    c10, all10 = get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', task='verb_orientation',  antecedent='f',
+    c10, all10 = get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', task='verb_orientation', llm=llm, antecedent='f',
                                  antecedent_list=['f', 'm'])
-    c11, all11 = get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', task='verb_orientation', antecedent='m',
+    c11, all11 = get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', task='verb_orientation', llm=llm,antecedent='m',
                                  antecedent_list=['f', 'm'])
     print((c10 + c11) / (all10 + all11))
     print('In internally oriented verb setting, the percentage of local binding:')
-    c12, all12 = get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', task='verb_orientation', antecedent='f',
+    c12, all12 = get_probability(in_verb_f1, f'result/{args.model}/in_verb_f1.tsv', task='verb_orientation', llm=llm,antecedent='f',
                                  antecedent_list=['f', 'm'])
-    c13, all13 = get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', task='verb_orientation', antecedent='m',
+    c13, all13 = get_probability(in_verb_m1, f'result/{args.model}/in_verb_m1.tsv', task='verb_orientation',llm=llm, antecedent='m',
                                  antecedent_list=['f', 'm'])
     print((c12 + c13) / (all12 + all13))
     print('In the blocking effect setting, the percentage of local binding:')
-    c14, all14 = get_probability(blocking, f'result/{args.model}/blocking.tsv', task='verb_orientation',antecedent='w',
+    c14, all14 = get_probability(blocking, f'result/{args.model}/blocking.tsv', task='verb_orientation',llm=llm,antecedent='w',
                                  antecedent_list=['f', 'm', 'w'])
     print('In animate setting, the percentage of long-distance binding:')
-    c15, all15 = get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', task='verb_orientation',  antecedent='t',
+    c15, all15 = get_probability(animacy_noun, f'result/{args.model}/animacy_noun.tsv', task='verb_orientation', llm=llm, antecedent='t',
                                  antecedent_list=['f', 'm', 't'])
     print('In subject orientation, the percentage of local binding:')
-    c16, all16 = get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', antecedent='f',
+    c16, all16 = get_probability(subj_f1, f'result/{args.model}/subj_f1.tsv', 'subject_orientation', llm=llm,antecedent='f',
                                  antecedent_list=['f', 'm'])
-    c17, all17 = get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', antecedent='m',
+    c17, all17 = get_probability(subj_m1, f'result/{args.model}/subj_m1.tsv', 'subject_orientation', llm=llm,antecedent='m',
                                  antecedent_list=['f', 'm'])
     # print('In subject orientation in a gender-biased setting, the percentage of local binding:')
     # c18, all18 =get_probability(subj_f1_bias, f'result/{args.model}/subj_f1_bias.tsv', 'subject_orientation', antecedent='f', antecedent_list=['f','m'])
