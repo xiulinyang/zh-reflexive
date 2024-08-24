@@ -21,7 +21,7 @@ verb_f1 = Path('data/verb_f1.txt').read_text().strip().split('\n')
 verb_m1 = Path('data/verb_m1.txt').read_text().strip().split('\n')
 in_verb_f1 = Path('data/in_verb_f1.txt').read_text().strip().split('\n')
 in_verb_m1 = Path('data/in_verb_m1.txt').read_text().strip().split('\n')
-blocking = Path('data/blocking_amb.txt').read_text().strip().split('\n')
+blocking = Path('data/blocking_literature.txt').read_text().strip().split('\n')
 animacy_pro = Path('data/inanimate_pron.txt').read_text().strip().split('\n')
 animacy_noun = Path('data/inanimate_nouns.txt').read_text().strip().split('\n')
 subj_f1 = Path('data/subject_orientation_f1.txt').read_text().strip().split('\n')
@@ -162,27 +162,27 @@ if __name__ == '__main__':
         raise ValueError('invalid model name!')
 
 
-    print('========================REAL DATA==========================================')
-    print('real data: local binding, female binder')
-    c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', antecedent_list=['f','m'])
-    print('real data: local binding, male binder')
-    c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', antecedent_list=['f','m'])
-
-    print('real data: reflexive verb, local binding')
-    c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
-    print('real data: non-reflexive verb, long-distance binding')
-    c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
-    print('real data: animacy effect, long-distance binding')
-    c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv', task = 'animacy')
-
-    print('real data: blocking effect, long-distance binding')
-    c20, all20 = test_real_data('data/real_data_blocking.txt', f'result/{args.model}/natural_blocking.tsv', task='blocking')
-
-
-    real_c = c1+c2+c3+c4+c5+c20
-    real_all = all1+all2+all3+all4+all5+all20
-    print('++++++++++++++++++++++++OVERALL+++++++++++++++++++++++++++++++++++++++++')
-    print(f'{real_c}\t{real_all}\t{real_c/real_all}')
+    # print('========================REAL DATA==========================================')
+    # print('real data: local binding, female binder')
+    # c1, all1 = get_probability(natural_local_f, f'result/{args.model}/natural_local_f1.tsv', 'syntax', antecedent='f', antecedent_list=['f','m'])
+    # print('real data: local binding, male binder')
+    # c2, all2 = get_probability(natural_local_m, f'result/{args.model}/natural_local_m1.tsv', 'syntax', antecedent='m', antecedent_list=['f','m'])
+    #
+    # print('real data: reflexive verb, local binding')
+    # c3, all3 = test_real_data('data/real_data_lb_verb.txt', f'result/{args.model}/lb_name.tsv')
+    # print('real data: non-reflexive verb, long-distance binding')
+    # c4, all4 = test_real_data('data/real_data_ldb_verb.txt', f'result/{args.model}/ldb_name.tsv')
+    # print('real data: animacy effect, long-distance binding')
+    # c5, all5 = test_real_data('data/real_data_ldb_anim.txt', f'result/{args.model}/ldb_anim.tsv', task = 'animacy')
+    #
+    # print('real data: blocking effect, long-distance binding')
+    # c20, all20 = test_real_data('data/real_data_blocking.txt', f'result/{args.model}/natural_blocking.tsv', task='blocking')
+    #
+    #
+    # real_c = c1+c2+c3+c4+c5+c20
+    # real_all = all1+all2+all3+all4+all5+all20
+    # print('++++++++++++++++++++++++OVERALL+++++++++++++++++++++++++++++++++++++++++')
+    # print(f'{real_c}\t{real_all}\t{real_c/real_all}')
     print('========================SYNTHETIC DATA======================================')
     print('In the local binding setting, the percentage of local binding is: ')
     c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', antecedent_list=['f','m'])
@@ -215,7 +215,7 @@ if __name__ == '__main__':
     print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
     print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
 
-    print(
-        f'{round((c1 / all1) * 100, 1)}&{round((c2 / all2) * 100, 1)}&{round((c4 / all4) * 100, 1)}&{round((c3 / all3) * 100, 1)}&{round((c20 / all20), 1)}&{round((c5 / all5) * 100, 1)}&{round((real_c / real_all) * 100, 1)}')
+    # print(
+    #     f'{round((c1 / all1) * 100, 1)}&{round((c2 / all2) * 100, 1)}&{round((c4 / all4) * 100, 1)}&{round((c3 / all3) * 100, 1)}&{round((c20 / all20), 1)}&{round((c5 / all5) * 100, 1)}&{round((real_c / real_all) * 100, 1)}')
     print(
         f'{round((c6 / all6) * 100, 1)}&{round((c7 / all7) * 100, 1)}&{round((c8 / all8) * 100, 1)}&{round((c9 / all9) * 100, 1)}&{round(((c10 + c11) / (all10 + all11)) * 100, 1)}&{round(((c12 + c13) / (all12 + all13)) * 100, 1)}&{round((c14 / all14) * 100, 1)}&{round((c15 / all15) * 100, 1)}&{round((c16 / all16) * 100, 1)}&{round((c17 / all17) * 100, 1)}&{round((syn_c / syn_all) * 100, 1)}')
