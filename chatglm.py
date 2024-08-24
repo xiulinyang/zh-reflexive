@@ -157,7 +157,7 @@ if __name__ == '__main__':
 
     if args.model =='gpt':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-chinese-cluecorpussmall")
-        model = GPT2LMHeadModel.from_pretrained("uer/gpt2-chinese-cluecorpussmalll")
+        model = GPT2LMHeadModel.from_pretrained("uer/gpt2-chinese-cluecorpussmall")
 
     elif args.model =='gpt-large':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-large-chinese-cluecorpussmall")
