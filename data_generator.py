@@ -9,7 +9,7 @@ out_verb=['诬陷','拥抱', '离开', '打扰', '超过', '忘了','回答',
 # control_verb = ['让']
 # speech_verb = ['知道', '反对','记得', '提到', '主张', '埋怨', '表示', '赞成', '希望', '坚信','声称','以为','怀疑','觉得','暗示','表示']
 speech_verb  = ['说']
-in_verb = ['反思', '反省','坦白', '提升', '炫耀','调节','坚持','交代','计较','检讨','卖弄','表达','表现','扭伤']
+in_verb = ['反思', '反省','坦白', '迷失', '克制', '检讨', '放松', '磨练','奉献','调整', '提升', '炫耀','调节','坚持','交代','计较','检讨','卖弄','表达','表现','扭伤']
 amb_verbs = ['喜欢', '厌恶','帮助','相信','支持','欺骗','安慰', '挑战','鄙视','忽略','原谅','怀疑','超越', '设计','讨厌','介绍','夸奖','改造','结束','解放','刺激','考虑','掐','评论','爱惜','爱护','爱','保护', '改正','谈论','维护','牺牲','重复','抓','指着','锻炼','打','操心','纠正','扎','谈到','证明','训练','依靠','优待','鞭策', '尊重','辜负','担心','控制']
 
 inanimate_verbs= ['伤害','改变','影响','吸引','启发','激励','刺激','困扰','鼓舞','鞭策','感动','刺激','迷惑','提醒','激励']
@@ -122,14 +122,14 @@ if __name__=='__main__':
     # create_verb_pairs(out_verb, output_file='data/verb_m1.txt', female_first=False)
     # blocking_effect_generator(amb_verbs, output_file='data/blocking_amb.txt')
     # blocking_effect_generator(out_verb, output_file='data/blocking_verbs.txt')
-    # create_verb_pairs(in_verb, output_file='data/in_verb_f1.txt')
-    # create_verb_pairs(in_verb, output_file='data/in_verb_m1.txt', female_first=False)
+    create_verb_pairs(in_verb, output_file='data/in_verb_f1.txt')
+    create_verb_pairs(in_verb, output_file='data/in_verb_m1.txt', female_first=False)
     # animacy_effect(inanimate_nouns, inanimate_verbs, output_file='data/inanimate_nouns.txt')
     # animacy_effect(inanimate_pronoun, inanimate_verbs, output_file='data/inanimate_pron.txt')
-    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
-    subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
-    subject_orientation(female_only, ditransitive_verbs_bias, output_file='data/subject_orientation_f1_bias.txt')
-    subject_orientation(male_only, ditransitive_verbs_bias, output_file='data/subject_orientation_m1_bias.txt', female_first=False)
+    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_f1.txt')
+    # subject_orientation(inanimate_nouns_no_def, ditransitive_verbs, output_file='data/subject_orientation_m1.txt', female_first=False)
+    # subject_orientation(female_only, ditransitive_verbs_bias, output_file='data/subject_orientation_f1_bias.txt')
+    # subject_orientation(male_only, ditransitive_verbs_bias, output_file='data/subject_orientation_m1_bias.txt', female_first=False)
 
 
 # local_binding(amb_verbs, output_file='data/local_female.txt', female=True)

@@ -60,12 +60,12 @@ def get_probability(zh_sents, output, task=None, local=True, antecedent=None, an
                 de_id = s.index('的')
                 # end_id = s.index('是')
                 end_id = len(s)-1
-                text = f'如果{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
+                text = f'假如{s[:-1]}， 那么{s[de_id + 1:end_id]}是关于{mask}的。'
             else:
                 if local:
-                    text = f'如果{s[:-1]},那么{s[2:-3]}{mask}自己。'
+                    text = f'假如{s[:-1]},那么{s[2:-3]}{mask}自己。'
                 else:
-                    text = f'如果{s[:-1]},那么{s[2:-3]}{mask}。'
+                    text = f'假如{s[:-1]},那么{s[2:-3]}{mask}。'
                 # text = f'如果{s[:-1]},那么{mask}{s[-5:]}'
             predictions = nlp(text, targets=target)
             scores = softmax([x['score'] for x in predictions])
@@ -159,6 +159,12 @@ if __name__ == '__main__':
         model = 'xlm-roberta-large'
     elif args.model == 'roberta':
         model = 'hfl/chinese-roberta-wwm-ext-large'
+    elif args.model == 'lert':
+        model = 'hfl/chinese-lert-base'
+    elif args.model =='lert-large':
+        model = 'hfl/chinese-lert-large'
+    elif args.model =='bert-wwm':
+        model = 'hfl/chinese-bert-wwm-ext'
     else:
         raise ValueError('invalid model name!')
 
@@ -188,9 +194,10 @@ if __name__ == '__main__':
     print('In the local binding setting, the percentage of local binding is: ')
     c6, all6 = get_probability(local_f1, f'result/{args.model}/local_f1.tsv', 'syntax2', antecedent='f', antecedent_list=['f','m'])
     c7, all7 =get_probability(local_m1, f'result/{args.model}/local_m1.tsv', 'syntax2', antecedent='m', antecedent_list=['f','m'])
-    # print('In ambiguous setting, the percentage of local binding:')
-    # c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv', antecedent='f', antecedent_list=['f','m'])
-    # c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', antecedent='m', antecedent_list=['f','m'])
+    print('In ambiguous setting, the percentage of local binding:')
+    c8, all8 =get_probability(amb_f1, f'result/{args.model}/amb_f1.tsv','syntax2', antecedent='f', antecedent_list=['f','m'])
+    c9, all9 =get_probability(amb_m1, f'result/{args.model}/amb_m1.tsv', 'syntax2',antecedent='m', antecedent_list=['f','m'])
+    print((c8 + c9) / (all8 + all9))
     print('In externally oriented verb setting, the percentage of local binding:')
     c10, all10 =get_probability(verb_f1, f'result/{args.model}/verb_f1.tsv', local=False, antecedent='f', antecedent_list=['f','m'])
     c11, all11 =get_probability(verb_m1, f'result/{args.model}/verb_m1.tsv', local=False,  antecedent='m', antecedent_list=['f','m'])
@@ -211,12 +218,12 @@ if __name__ == '__main__':
     # c19, all19 =get_probability(subj_m1_bias, f'result/{args.model}/subj_m1_bias.tsv', 'subject_orientation', antecedent='m', antecedent_list=['f','m'])
 
     # print(f'{(c16+c18)/(all16+all18)}\t{(c17+c19)/(all17+all19)}')
-    syn_c = c6+c7+c10+c11+c12+c13+c14+c15+c16+c17
-    syn_all = all6+all7+all10+all11+all12+all13+all14+all15+all16+all17
+    syn_c = c6+c7+c8+c9+c10+c11+c12+c13+c14+c15+c16+c17
+    syn_all = all6+all7+all8+all9+all10+all11+all12+all13+all14+all15+all16+all17
     print('+++++++++++++++++++++++OVERALL++++++++++++++++++++++++++')
     print(f'{syn_c}\t{syn_all}\t{syn_c/syn_all}')
 
     # print(
     #     f'{round((c1 / all1) * 100, 1)}&{round((c2 / all2) * 100, 1)}&{round((c4 / all4) * 100, 1)}&{round((c3 / all3) * 100, 1)}&{round((c20 / all20), 1)}&{round((c5 / all5) * 100, 1)}&{round((real_c / real_all) * 100, 1)}')
     print(
-        f'{round((c6 / all6) * 100, 1)}&{round((c7 / all7) * 100, 1)}&{round(((c10 + c11) / (all10 + all11)) * 100, 1)}&{round(((c12 + c13) / (all12 + all13)) * 100, 1)}&{round((c14 / all14) * 100, 1)}&{round((c15 / all15) * 100, 1)}&{round((c16 / all16) * 100, 1)}&{round((c17 / all17) * 100, 1)}&{round((syn_c / syn_all) * 100, 1)}')
+        f'{round((c6 / all6) * 100, 1)}&{round((c7 / all7) * 100, 1)}&{round(((c10 + c11) / (all10 + all11)) * 100, 1)}&{round(((c12 + c13) / (all12 + all13)) * 100, 1)}&{round((c14 / all14) * 100, 1)}&{round(((c8+c9) / (all8+all9)) * 100, 1)}&{round((c15 / all15) * 100, 1)}&{round((c16 / all16) * 100, 1)}&{round((c17 / all17) * 100, 1)}&{round((syn_c / syn_all) * 100, 1)}')
