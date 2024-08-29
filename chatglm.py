@@ -152,11 +152,12 @@ if __name__ == '__main__':
     except:
         pass
     llm = False
-    if args.model =='gpt-distill':
+
+    if args.model =='gpt-distil':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-distil-chinese-cluecorpussmall")
 
-    if args.model =='gpt':
+    elif args.model =='gpt':
         tokenizer = BertTokenizer.from_pretrained("uer/gpt2-chinese-cluecorpussmall")
         model = GPT2LMHeadModel.from_pretrained("uer/gpt2-chinese-cluecorpussmall")
 
@@ -174,6 +175,7 @@ if __name__ == '__main__':
         model = AutoModel.from_pretrained("THUDM/glm-4-9b-chat", trust_remote_code=True).half().cuda()
         llm = True
     else:
+        print(args.model)
         raise ValueError('The model name is not recognized')
 
     model.eval()
