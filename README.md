@@ -1,6 +1,6 @@
 # zh-reflexive
 This repository contains the code for the COLING Paper *Language Models at the Syntax-Semantics Interface: A Case Study of the Long-Distance Binding of Chinese Reflexive ziji* by Xiulin Yang.
-The code will be updated by 31st December when I finish my finals.
+**The code will be updated by 31st December when I finish my finals.**
 
 Please create a virtual environment using ```conda create -n ziji python=3.8``` and install all the dependencies. 
 ## prepare for the data
