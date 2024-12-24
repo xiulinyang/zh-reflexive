@@ -5,7 +5,9 @@ This repository contains the code for the COLING 2025 paper *Language Models at 
 ---
 
 ❗ **Important Note:**  
-The data has been merged with [Yixiao-Song/SLING_Data_Code](https://github.com/Yixiao-Song/SLING_Data_Code). Please refer to that repository for accessing the data and code as needed.
+- You can access the data from the `data` folder.  
+- Additionally, the data has been merged with [Yixiao-Song/SLING_Data_Code](https://github.com/Yixiao-Song/SLING_Data_Code). Feel free to refer to that repository for accessing the data and evaluation code as needed.
+
 
 ---
 
