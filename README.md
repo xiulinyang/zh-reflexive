@@ -2,7 +2,7 @@
 This repository contains the code for the COLING 2025 Paper *Language Models at the Syntax-Semantics Interface: A Case Study of the Long-Distance Binding of Chinese Reflexive ziji* by Xiulin Yang.
 
 
-**❗The code will be updated by 31st December when I finish my finals.**
+❗ **Note:** The data has been merged with [Yixiao-Song/SLING_Data_Code](https://github.com/Yixiao-Song/SLING_Data_Code). Please refer to that repository for accessing the data and code as needed.
 
 Please create a virtual environment using ```conda create -n ziji python=3.8``` and install all the dependencies. 
 ## prepare for the data
